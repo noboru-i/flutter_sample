@@ -9,16 +9,22 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: const Color(0xFFF4F3EF),
+//        buttonTheme: const ButtonThemeData(
+//          buttonColor: Colors.yellow,
+//          shape: RoundedRectangleBorder(
+//            borderRadius: BorderRadius.all(Radius.circular(100)),
+//          ),
+//          textTheme: ButtonTextTheme.primary,
+//        ),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -37,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Flutter Demo Home Page'),
       ),
       body: Center(
         child: Column(
@@ -85,19 +91,30 @@ class BounceButton extends MaterialButton {
     Color disabledColor,
     Color focusColor,
     Color hoverColor,
-    Color highlightColor = Colors.transparent,
-    Color splashColor = Colors.transparent,
+    Color highlightColor,
+    Color splashColor,
     Brightness colorBrightness,
+    double elevation,
+    double focusElevation,
+    double hoverElevation,
+    double highlightElevation,
+    double disabledElevation,
     EdgeInsetsGeometry padding,
     ShapeBorder shape,
     Clip clipBehavior = Clip.none,
     FocusNode focusNode,
     bool autofocus = false,
     MaterialTapTargetSize materialTapTargetSize,
-    @required Widget child,
+    Duration animationDuration,
+    Widget child,
     this.ratio = 1.05,
-  })  : assert(clipBehavior != null),
-        assert(autofocus != null),
+  })  : assert(autofocus != null),
+        assert(elevation == null || elevation >= 0.0),
+        assert(focusElevation == null || focusElevation >= 0.0),
+        assert(hoverElevation == null || hoverElevation >= 0.0),
+        assert(highlightElevation == null || highlightElevation >= 0.0),
+        assert(disabledElevation == null || disabledElevation >= 0.0),
+        assert(clipBehavior != null),
         super(
           key: key,
           onPressed: onPressed,
@@ -113,12 +130,18 @@ class BounceButton extends MaterialButton {
           highlightColor: highlightColor,
           splashColor: splashColor,
           colorBrightness: colorBrightness,
+          elevation: elevation,
+          focusElevation: focusElevation,
+          hoverElevation: hoverElevation,
+          highlightElevation: highlightElevation,
+          disabledElevation: disabledElevation,
           padding: padding,
           shape: shape,
           clipBehavior: clipBehavior,
           focusNode: focusNode,
           autofocus: autofocus,
           materialTapTargetSize: materialTapTargetSize,
+          animationDuration: animationDuration,
           child: child,
         );
 
@@ -129,7 +152,10 @@ class BounceButton extends MaterialButton {
     return BounceAnimation(
       onPressed: onPressed,
       ratio: ratio,
-      child: super.build(context),
+      child: AbsorbPointer(
+        // stops propagation of tap events.
+        child: super.build(context),
+      ),
     );
   }
 }
@@ -153,10 +179,12 @@ class _BounceAnimationState extends State<BounceAnimation>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _scale;
+  TickerFuture _tickerFuture;
 
   @override
   void initState() {
     super.initState();
+
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 50),
@@ -176,12 +204,23 @@ class _BounceAnimationState extends State<BounceAnimation>
     super.dispose();
   }
 
+  void _forwardAnimation() {
+    _tickerFuture = _controller.forward();
+  }
+
+  void _reverseAnimation() {
+    // start the reverse animation after the forward animation ends.
+    _tickerFuture.whenCompleteOrCancel(() {
+      _controller.reverse();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: (_) => _controller.forward(),
-      onTapUp: (_) => _controller.reverse(),
-      onTapCancel: () => _controller.reverse(),
+      onTapDown: (_) => _forwardAnimation(),
+      onTapUp: (_) => _reverseAnimation(),
+      onTapCancel: _reverseAnimation,
       onTap: widget.onPressed,
       child: ScaleTransition(
         scale: _scale,
