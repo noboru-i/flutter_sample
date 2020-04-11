@@ -57,11 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             BounceButton(
               onPressed: _incrementCounter,
-              child: Container(
-                color: Colors.lightBlue,
-                padding: const EdgeInsets.all(12),
-                child: Text('BounceButton'),
-              ),
+              child: Text('BounceButton'),
             ),
           ],
         ),
@@ -76,8 +72,70 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 // ref: https://medium.com/flutter-community/flutter-bouncing-button-animation-ece660e19c91
-class BounceButton extends StatefulWidget {
+class BounceButton extends MaterialButton {
   BounceButton({
+    Key key,
+    @required VoidCallback onPressed,
+    VoidCallback onLongPress,
+    ValueChanged<bool> onHighlightChanged,
+    ButtonTextTheme textTheme,
+    Color textColor,
+    Color disabledTextColor,
+    Color color,
+    Color disabledColor,
+    Color focusColor,
+    Color hoverColor,
+    Color highlightColor = Colors.transparent,
+    Color splashColor = Colors.transparent,
+    Brightness colorBrightness,
+    EdgeInsetsGeometry padding,
+    ShapeBorder shape,
+    Clip clipBehavior = Clip.none,
+    FocusNode focusNode,
+    bool autofocus = false,
+    MaterialTapTargetSize materialTapTargetSize,
+    @required Widget child,
+    this.ratio = 1.05,
+  })  : assert(clipBehavior != null),
+        assert(autofocus != null),
+        super(
+          key: key,
+          onPressed: onPressed,
+          onLongPress: onLongPress,
+          onHighlightChanged: onHighlightChanged,
+          textTheme: textTheme,
+          textColor: textColor,
+          disabledTextColor: disabledTextColor,
+          color: color,
+          disabledColor: disabledColor,
+          focusColor: focusColor,
+          hoverColor: hoverColor,
+          highlightColor: highlightColor,
+          splashColor: splashColor,
+          colorBrightness: colorBrightness,
+          padding: padding,
+          shape: shape,
+          clipBehavior: clipBehavior,
+          focusNode: focusNode,
+          autofocus: autofocus,
+          materialTapTargetSize: materialTapTargetSize,
+          child: child,
+        );
+
+  final double ratio;
+
+  @override
+  Widget build(BuildContext context) {
+    return BounceAnimation(
+      onPressed: onPressed,
+      ratio: ratio,
+      child: super.build(context),
+    );
+  }
+}
+
+class BounceAnimation extends StatefulWidget {
+  BounceAnimation({
     @required this.onPressed,
     this.child,
     this.ratio = 1.05,
@@ -88,10 +146,10 @@ class BounceButton extends StatefulWidget {
   final double ratio;
 
   @override
-  _BounceButtonState createState() => _BounceButtonState();
+  _BounceAnimationState createState() => _BounceAnimationState();
 }
 
-class _BounceButtonState extends State<BounceButton>
+class _BounceAnimationState extends State<BounceAnimation>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _scale;
@@ -101,7 +159,7 @@ class _BounceButtonState extends State<BounceButton>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 50),
     );
     _scale = _controller
         .drive(
