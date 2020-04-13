@@ -91,29 +91,17 @@ class BounceButton extends MaterialButton {
     Color disabledColor,
     Color focusColor,
     Color hoverColor,
-    Color highlightColor,
-    Color splashColor,
     Brightness colorBrightness,
-    double elevation,
-    double focusElevation,
-    double hoverElevation,
-    double highlightElevation,
-    double disabledElevation,
     EdgeInsetsGeometry padding,
     ShapeBorder shape,
     Clip clipBehavior = Clip.none,
     FocusNode focusNode,
     bool autofocus = false,
     MaterialTapTargetSize materialTapTargetSize,
-    Duration animationDuration,
+    Duration animationDuration = kThemeChangeDuration,
     Widget child,
     this.ratio = 1.05,
   })  : assert(autofocus != null),
-        assert(elevation == null || elevation >= 0.0),
-        assert(focusElevation == null || focusElevation >= 0.0),
-        assert(hoverElevation == null || hoverElevation >= 0.0),
-        assert(highlightElevation == null || highlightElevation >= 0.0),
-        assert(disabledElevation == null || disabledElevation >= 0.0),
         assert(clipBehavior != null),
         super(
           key: key,
@@ -127,14 +115,7 @@ class BounceButton extends MaterialButton {
           disabledColor: disabledColor,
           focusColor: focusColor,
           hoverColor: hoverColor,
-          highlightColor: highlightColor,
-          splashColor: splashColor,
           colorBrightness: colorBrightness,
-          elevation: elevation,
-          focusElevation: focusElevation,
-          hoverElevation: hoverElevation,
-          highlightElevation: highlightElevation,
-          disabledElevation: disabledElevation,
           padding: padding,
           shape: shape,
           clipBehavior: clipBehavior,
@@ -152,6 +133,7 @@ class BounceButton extends MaterialButton {
     return BounceAnimation(
       onPressed: onPressed,
       ratio: ratio,
+      animationDuration: animationDuration,
       child: AbsorbPointer(
         // stops propagation of tap events.
         child: super.build(context),
@@ -165,11 +147,13 @@ class BounceAnimation extends StatefulWidget {
     @required this.onPressed,
     this.child,
     this.ratio = 1.05,
+    this.animationDuration,
   });
 
   final VoidCallback onPressed;
   final Widget child;
   final double ratio;
+  final Duration animationDuration;
 
   @override
   _BounceAnimationState createState() => _BounceAnimationState();
@@ -187,11 +171,11 @@ class _BounceAnimationState extends State<BounceAnimation>
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 50),
+      duration: widget.animationDuration,
     );
     _scale = _controller
         .drive(
-          CurveTween(curve: Curves.slowMiddle),
+          CurveTween(curve: Curves.linear),
         )
         .drive(
           Tween(begin: 1, end: widget.ratio),
