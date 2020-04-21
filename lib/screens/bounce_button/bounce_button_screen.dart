@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sample/screens/bounce_button.dart';
+import 'package:flutter_sample/screens/bounce_button/bounce_button.dart';
 
 class BounceButtonScreen extends StatelessWidget {
   static const routeName = '/bounce_button';

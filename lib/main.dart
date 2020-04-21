@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sample/screens/bounce_button_screen.dart';
+import 'package:flutter_sample/screens/bounce_button/bounce_button_screen.dart';
 
 void main() => runApp(MyApp());
 
