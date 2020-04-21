@@ -1,22 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/screens/bounce_button.dart';
 
-class BounceButtonScreen extends StatefulWidget {
+class BounceButtonScreen extends StatelessWidget {
   static const routeName = '/bounce_button';
-
-  BounceButtonScreen({Key key}) : super(key: key);
-
-  @override
-  _BounceButtonScreenState createState() => _BounceButtonScreenState();
-}
-
-class _BounceButtonScreenState extends State<BounceButtonScreen> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,171 +10,346 @@ class _BounceButtonScreenState extends State<BounceButtonScreen> {
       appBar: AppBar(
         title: Text('Flutter Demo Home Page'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(8),
           children: <Widget>[
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-            RaisedButton(
-              onPressed: _incrementCounter,
-              child: Text('RaisedButton'),
-            ),
-            FlatButton(
-              onPressed: _incrementCounter,
-              child: Text('FlatButton'),
-            ),
-            BounceButton(
-              onPressed: _incrementCounter,
-              child: Text('BounceButton'),
-            ),
+            Text('enabled'),
+            _ListItem1(),
+            Text('disabled'),
+            _ListItem2(),
+            Text('onLongPress'),
+            _ListItem3(),
+            Text('ButtonTextTheme.normal'),
+            _ListItem4(ButtonTextTheme.normal),
+            Text('ButtonTextTheme.accent'),
+            _ListItem4(ButtonTextTheme.accent),
+            Text('ButtonTextTheme.primary'),
+            _ListItem4(ButtonTextTheme.primary),
+            Text('enable colors'),
+            _ListItem5(),
+            Text('disabled color'),
+            _ListItem6(),
+            Text('Brightness.light'),
+            _ListItem7(Brightness.light),
+            Text('Brightness.dark'),
+            _ListItem7(Brightness.dark),
+            Text('elevation'),
+            _ListItem8(),
+            Text('padding'),
+            _ListItem9(),
+            Text('shape'),
+            _ListItem10(),
+            Text('ratio'),
+            _ListItem11(),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
     );
   }
 }
 
-// ref: https://medium.com/flutter-community/flutter-bouncing-button-animation-ece660e19c91
-class BounceButton extends MaterialButton {
-  BounceButton({
-    Key key,
-    @required VoidCallback onPressed,
-    VoidCallback onLongPress,
-    ValueChanged<bool> onHighlightChanged,
-    ButtonTextTheme textTheme,
-    Color textColor,
-    Color disabledTextColor,
-    Color color,
-    Color disabledColor,
-    Color focusColor,
-    Color hoverColor,
-    Brightness colorBrightness,
-    EdgeInsetsGeometry padding,
-    ShapeBorder shape,
-    Clip clipBehavior = Clip.none,
-    FocusNode focusNode,
-    bool autofocus = false,
-    MaterialTapTargetSize materialTapTargetSize,
-    Duration animationDuration = kThemeChangeDuration,
-    Widget child,
-    this.ratio = 1.05,
-  })  : assert(autofocus != null),
-        assert(clipBehavior != null),
-        super(
-          key: key,
-          onPressed: onPressed,
-          onLongPress: onLongPress,
-          onHighlightChanged: onHighlightChanged,
+class _ListItem1 extends StatelessWidget {
+  void _onPressed(BuildContext context) {
+    Scaffold.of(context).showSnackBar(new SnackBar(
+      content: new Text('pressed!'),
+    ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        RaisedButton(
+          onPressed: () => _onPressed(context),
+          child: Text('RaisedButton'),
+        ),
+        FlatButton(
+          onPressed: () => _onPressed(context),
+          child: Text('FlatButton'),
+        ),
+        BounceButton(
+          onPressed: () => _onPressed(context),
+          child: Text('BounceButton'),
+        ),
+      ],
+    );
+  }
+}
+
+class _ListItem2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        RaisedButton(
+          onPressed: null,
+          child: Text('RaisedButton'),
+        ),
+        FlatButton(
+          onPressed: null,
+          child: Text('FlatButton'),
+        ),
+        BounceButton(
+          onPressed: null,
+          child: Text('BounceButton'),
+        ),
+      ],
+    );
+  }
+}
+
+class _ListItem3 extends StatelessWidget {
+  void _onLongPressed(BuildContext context) {
+    Scaffold.of(context).showSnackBar(new SnackBar(
+      content: new Text('long pressed!'),
+    ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        RaisedButton(
+          onPressed: null,
+          onLongPress: () => _onLongPressed(context),
+          child: Text('RaisedButton'),
+        ),
+        FlatButton(
+          onPressed: null,
+          onLongPress: () => _onLongPressed(context),
+          child: Text('FlatButton'),
+        ),
+        BounceButton(
+          onPressed: null,
+          onLongPress: () => _onLongPressed(context),
+          child: Text('BounceButton'),
+        ),
+      ],
+    );
+  }
+}
+
+class _ListItem4 extends StatelessWidget {
+  _ListItem4(this.textTheme);
+
+  ButtonTextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        RaisedButton(
+          onPressed: () {},
           textTheme: textTheme,
-          textColor: textColor,
-          disabledTextColor: disabledTextColor,
-          color: color,
-          disabledColor: disabledColor,
-          focusColor: focusColor,
-          hoverColor: hoverColor,
+          child: Text('RaisedButton'),
+        ),
+        FlatButton(
+          onPressed: () {},
+          textTheme: textTheme,
+          child: Text('FlatButton'),
+        ),
+        BounceButton(
+          onPressed: () {},
+          textTheme: textTheme,
+          child: Text('BounceButton'),
+        ),
+      ],
+    );
+  }
+}
+
+class _ListItem5 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        RaisedButton(
+          onPressed: () {},
+          textColor: Colors.yellow,
+          color: Colors.green,
+          child: Text('RaisedButton'),
+        ),
+        FlatButton(
+          onPressed: () {},
+          textColor: Colors.yellow,
+          color: Colors.green,
+          child: Text('FlatButton'),
+        ),
+        BounceButton(
+          onPressed: () {},
+          textColor: Colors.yellow,
+          color: Colors.green,
+          child: Text('BounceButton'),
+        ),
+      ],
+    );
+  }
+}
+
+class _ListItem6 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        RaisedButton(
+          onPressed: null,
+          disabledTextColor: Colors.amber,
+          disabledColor: Colors.cyan,
+          child: Text('RaisedButton'),
+        ),
+        FlatButton(
+          onPressed: null,
+          disabledTextColor: Colors.amber,
+          disabledColor: Colors.cyan,
+          child: Text('FlatButton'),
+        ),
+        BounceButton(
+          onPressed: null,
+          disabledTextColor: Colors.amber,
+          disabledColor: Colors.cyan,
+          child: Text('BounceButton'),
+        ),
+      ],
+    );
+  }
+}
+
+class _ListItem7 extends StatelessWidget {
+  _ListItem7(this.colorBrightness);
+
+  Brightness colorBrightness;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        RaisedButton(
+          onPressed: () {},
           colorBrightness: colorBrightness,
-          padding: padding,
-          shape: shape,
-          clipBehavior: clipBehavior,
-          focusNode: focusNode,
-          autofocus: autofocus,
-          materialTapTargetSize: materialTapTargetSize,
-          animationDuration: animationDuration,
-          child: child,
-        );
-
-  final double ratio;
-
-  @override
-  Widget build(BuildContext context) {
-    return BounceAnimation(
-      onPressed: onPressed,
-      ratio: ratio,
-      animationDuration: animationDuration,
-      child: AbsorbPointer(
-        // stops propagation of tap events.
-        child: super.build(context),
-      ),
+          child: Text('RaisedButton'),
+        ),
+        FlatButton(
+          onPressed: () {},
+          colorBrightness: colorBrightness,
+          child: Text('FlatButton'),
+        ),
+        BounceButton(
+          onPressed: () {},
+          colorBrightness: colorBrightness,
+          child: Text('BounceButton'),
+        ),
+      ],
     );
   }
 }
 
-class BounceAnimation extends StatefulWidget {
-  BounceAnimation({
-    @required this.onPressed,
-    this.child,
-    this.ratio = 1.05,
-    this.animationDuration,
-  });
-
-  final VoidCallback onPressed;
-  final Widget child;
-  final double ratio;
-  final Duration animationDuration;
-
-  @override
-  _BounceAnimationState createState() => _BounceAnimationState();
-}
-
-class _BounceAnimationState extends State<BounceAnimation>
-    with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _scale;
-  TickerFuture _tickerFuture;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.animationDuration,
-    );
-    _scale = _controller
-        .drive(
-          CurveTween(curve: Curves.linear),
-        )
-        .drive(
-          Tween(begin: 1, end: widget.ratio),
-        );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _forwardAnimation() {
-    _tickerFuture = _controller.forward();
-  }
-
-  void _reverseAnimation() {
-    // start the reverse animation after the forward animation ends.
-    _tickerFuture.whenCompleteOrCancel(() {
-      _controller.reverse();
-    });
-  }
-
+class _ListItem8 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (_) => _forwardAnimation(),
-      onTapUp: (_) => _reverseAnimation(),
-      onTapCancel: _reverseAnimation,
-      onTap: widget.onPressed,
-      child: ScaleTransition(
-        scale: _scale,
-        child: widget.child,
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        RaisedButton(
+          onPressed: () {},
+          elevation: 8,
+          child: Text('RaisedButton'),
+        ),
+        FlatButton(
+          onPressed: () {},
+//          elevation: 8,
+          child: Text('FlatButton'),
+        ),
+        BounceButton(
+          onPressed: () {},
+          elevation: 8,
+          child: Text('BounceButton'),
+        ),
+      ],
+    );
+  }
+}
+
+class _ListItem9 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        RaisedButton(
+          onPressed: () {},
+          padding: EdgeInsets.symmetric(vertical: 24.0),
+          child: Text('RaisedButton'),
+        ),
+        FlatButton(
+          onPressed: () {},
+          padding: EdgeInsets.symmetric(vertical: 24.0),
+          child: Text('FlatButton'),
+        ),
+        BounceButton(
+          onPressed: () {},
+          padding: EdgeInsets.symmetric(vertical: 24.0),
+          child: Text('BounceButton'),
+        ),
+      ],
+    );
+  }
+}
+
+class _ListItem10 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        RaisedButton(
+          onPressed: () {},
+          shape: StadiumBorder(),
+          child: Text('RaisedButton'),
+        ),
+        FlatButton(
+          onPressed: () {},
+          shape: StadiumBorder(),
+          child: Text('FlatButton'),
+        ),
+        BounceButton(
+          onPressed: () {},
+          shape: StadiumBorder(),
+          child: Text('BounceButton'),
+        ),
+      ],
+    );
+  }
+}
+
+class _ListItem11 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        BounceButton(
+          onPressed: () {},
+          child: Text('BounceButton\nunspecified'),
+        ),
+        BounceButton(
+          onPressed: () {},
+          ratio: 0.5,
+          child: Text('BounceButton\n0.5'),
+        ),
+        BounceButton(
+          onPressed: () {},
+          ratio: 1.5,
+          child: Text('BounceButton\n1.5'),
+        ),
+      ],
     );
   }
 }
