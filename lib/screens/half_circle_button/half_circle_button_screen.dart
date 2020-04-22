@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -11,7 +13,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
         title: Text('HalfCircleButton'),
       ),
       body: Container(
-        color: Colors.black54,
+        color: Colors.blueGrey,
         child: Align(
           alignment: Alignment.bottomCenter,
           child: HalfCircleButton(),
@@ -33,6 +35,13 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
     setState(() {
       isHighlight = true;
     });
+
+    // after few milliseconds, automatically hide highlight.
+    Timer(Duration(milliseconds: 200), () {
+      setState(() {
+        isHighlight = false;
+      });
+    });
   }
 
   void _handleTap(BuildContext context) {
@@ -53,18 +62,17 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
       children: <Widget>[
         AnimatedOpacity(
           opacity: isHighlight ? 1 : 0,
-          duration: Duration(milliseconds: 250),
+          duration: Duration(milliseconds: 200),
           child: Transform.scale(
-            scale: 1.25,
+            scale: 1.5,
             alignment: Alignment.bottomCenter,
             child: CustomPaint(
-              painter: HalfCirclePainter(
+              painter: HalfCirclePainter2(
                 strokeColor: Colors.white,
-                paintingStyle: PaintingStyle.fill,
               ),
               child: SizedBox(
-                width: 200,
-                height: 100,
+                width: 324,
+                height: 162,
               ),
             ),
           ),
@@ -76,31 +84,16 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
           },
           onTapDown: _handleTapDown,
           onTapCancel: _handleTapCancel,
-          child: Stack(
-            children: <Widget>[
-              CustomPaint(
-                painter: HalfCirclePainter(
-                  strokeColor: Colors.blue,
-                  strokeWidth: 10,
-                  paintingStyle: PaintingStyle.fill,
-                ),
-                child: SizedBox(
-                  width: 200,
-                  height: 100,
-                ),
-              ),
-              CustomPaint(
-                painter: HalfCirclePainter(
-                  strokeColor: Colors.lightBlue,
-                  strokeWidth: 10,
-                  paintingStyle: PaintingStyle.stroke,
-                ),
-                child: SizedBox(
-                  width: 200,
-                  height: 100,
-                ),
-              ),
-            ],
+          child: CustomPaint(
+            painter: HalfCirclePainter(
+              color: Colors.blue,
+              strokeColor: Colors.lightBlue,
+              strokeWidth: 52,
+            ),
+            child: SizedBox(
+              width: 324,
+              height: 162,
+            ),
           ),
         ),
       ],
@@ -110,21 +103,68 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
 
 class HalfCirclePainter extends CustomPainter {
   HalfCirclePainter({
-    this.strokeColor = Colors.black,
+    this.color,
+    this.strokeColor,
     this.strokeWidth = 3,
-    this.paintingStyle = PaintingStyle.stroke,
   });
 
+  final Color color;
   final Color strokeColor;
-  final PaintingStyle paintingStyle;
   final double strokeWidth;
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (strokeColor != null) {
+      Paint strokePaint = Paint()
+        ..color = strokeColor
+        ..strokeWidth = strokeWidth
+        ..style = PaintingStyle.stroke;
+      canvas.drawPath(getHalfCirclePath(size.width, size.height), strokePaint);
+    }
+
+    if (color != null) {
+      Paint fillPaint = Paint()
+        ..color = color
+        ..style = PaintingStyle.fill;
+      canvas.drawPath(getHalfCirclePath(size.width, size.height), fillPaint);
+    }
+  }
+
+  Path getHalfCirclePath(double x, double y) {
+    num degToRad(num deg) => deg * (math.pi / 180.0);
+    return Path()
+      ..moveTo(0, y)
+      ..arcTo(
+        Rect.fromCenter(center: Offset(x / 2, y), width: x, height: y * 2),
+        degToRad(180),
+        degToRad(180),
+        false,
+      );
+  }
+
+  @override
+  bool shouldRepaint(HalfCirclePainter oldDelegate) {
+    return oldDelegate.color != color ||
+        oldDelegate.strokeColor != strokeColor ||
+        oldDelegate.strokeWidth != strokeWidth;
+  }
+}
+
+class HalfCirclePainter2 extends CustomPainter {
+  HalfCirclePainter2({
+    this.strokeColor = Colors.black,
+  });
+
+  final Color strokeColor;
+
+  @override
+  void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
-      ..color = strokeColor
-      ..strokeWidth = strokeWidth
-      ..style = paintingStyle;
+      ..shader = RadialGradient(
+        colors: [Colors.white, Colors.white, Colors.white12],
+        stops: [0, 0.8, 1],
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height * 2))
+      ..style = PaintingStyle.fill;
 
     canvas.drawPath(getTrianglePath(size.width, size.height), paint);
   }
@@ -142,9 +182,7 @@ class HalfCirclePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(HalfCirclePainter oldDelegate) {
-    return oldDelegate.strokeColor != strokeColor ||
-        oldDelegate.paintingStyle != paintingStyle ||
-        oldDelegate.strokeWidth != strokeWidth;
+  bool shouldRepaint(HalfCirclePainter2 oldDelegate) {
+    return oldDelegate.strokeColor != strokeColor;
   }
 }
