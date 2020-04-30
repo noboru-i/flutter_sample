@@ -168,6 +168,7 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
   @override
   Widget build(BuildContext context) {
     final alignment = _alignment();
+    final radius = widget.width > widget.height ? widget.height : widget.width;
 
     return Stack(
       children: <Widget>[
@@ -175,7 +176,7 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
           opacity: isHighlight ? 1 : 0,
           duration: Duration(milliseconds: 200),
           child: Transform.scale(
-            scale: (widget.width + widget.strokeWidth) / widget.width,
+            scale: (radius + widget.strokeWidth) / radius,
             alignment: alignment,
             child: CustomPaint(
               painter: HalfCirclePainter(
@@ -199,6 +200,7 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
           child: Stack(
             alignment: alignment,
             children: <Widget>[
+              // outer circle
               CustomPaint(
                 painter: HalfCirclePainter(
                   color: widget.strokeColor,
@@ -209,6 +211,7 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
                   height: widget.height,
                 ),
               ),
+              // inner circle
               CustomPaint(
                 painter: HalfCirclePainter(
                   color: widget.color,
