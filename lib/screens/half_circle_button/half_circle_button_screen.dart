@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 class HalfCircleButtonScreen extends StatelessWidget {
   static const routeName = '/half_circle_button';
@@ -12,18 +12,127 @@ class HalfCircleButtonScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('HalfCircleButton'),
       ),
-      body: Container(
-        color: Colors.blueGrey,
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: HalfCircleButton(),
-        ),
+      body: Stack(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              color: Colors.black,
+              width: 324,
+              height: 162,
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: HalfCircleButton(
+              width: 324,
+              height: 162,
+              strokeWidth: 52,
+              direction: AxisDirection.down,
+              color: Colors.blue,
+              strokeColor: Colors.lightBlue,
+              hightColor: Colors.white,
+              onTap: () {
+                print('tap!!!!');
+              },
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              color: Colors.black,
+              width: 95,
+              height: 190,
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: HalfCircleButton(
+              width: 95,
+              height: 190,
+              strokeWidth: 16,
+              direction: AxisDirection.right,
+              color: Colors.blue,
+              strokeColor: Colors.lightBlue,
+              hightColor: Colors.white,
+              onTap: () {
+                print('tap!!!!');
+              },
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              color: Colors.black,
+              width: 324,
+              height: 162,
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: HalfCircleButton(
+              width: 324,
+              height: 162,
+              strokeWidth: 52,
+              direction: AxisDirection.up,
+              color: Colors.blue,
+              strokeColor: Colors.lightBlue,
+              hightColor: Colors.white,
+              onTap: () {
+                print('tap!!!!');
+              },
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              color: Colors.black,
+              width: 95,
+              height: 190,
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: HalfCircleButton(
+              width: 95,
+              height: 190,
+              strokeWidth: 16,
+              direction: AxisDirection.left,
+              color: Colors.blue,
+              strokeColor: Colors.lightBlue,
+              hightColor: Colors.white,
+              onTap: () {
+                print('tap!!!!');
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
 class HalfCircleButton extends StatefulWidget {
+  HalfCircleButton({
+    this.width,
+    this.height,
+    this.strokeWidth,
+    this.direction,
+    this.color,
+    this.strokeColor,
+    this.hightColor,
+    this.onTap,
+  });
+
+  final double width;
+  final double height;
+  final double strokeWidth;
+  final AxisDirection direction;
+  final Color color;
+  final Color strokeColor;
+  final Color hightColor;
+  final GestureTapCallback onTap;
+
   @override
   _HalfCircleButtonState createState() => _HalfCircleButtonState();
 }
@@ -58,21 +167,24 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
 
   @override
   Widget build(BuildContext context) {
+    final alignment = _alignment();
+
     return Stack(
       children: <Widget>[
         AnimatedOpacity(
           opacity: isHighlight ? 1 : 0,
           duration: Duration(milliseconds: 200),
           child: Transform.scale(
-            scale: 1.5,
-            alignment: Alignment.bottomCenter,
+            scale: (widget.width + widget.strokeWidth) / widget.width,
+            alignment: alignment,
             child: CustomPaint(
-              painter: HalfCirclePainter2(
-                strokeColor: Colors.white,
+              painter: HalfCirclePainter(
+                color: widget.hightColor,
+                direction: widget.direction,
               ),
               child: SizedBox(
-                width: 324,
-                height: 162,
+                width: widget.width,
+                height: widget.height,
               ),
             ),
           ),
@@ -80,63 +192,91 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
         GestureDetector(
           onTap: () {
             _handleTap(context);
-            print('tap!!!!');
+            widget.onTap();
           },
           onTapDown: _handleTapDown,
           onTapCancel: _handleTapCancel,
-          child: CustomPaint(
-            painter: HalfCirclePainter(
-              color: Colors.blue,
-              strokeColor: Colors.lightBlue,
-              strokeWidth: 52,
-            ),
-            child: SizedBox(
-              width: 324,
-              height: 162,
-            ),
+          child: Stack(
+            alignment: alignment,
+            children: <Widget>[
+              CustomPaint(
+                painter: HalfCirclePainter(
+                  color: widget.strokeColor,
+                  direction: widget.direction,
+                ),
+                child: SizedBox(
+                  width: widget.width,
+                  height: widget.height,
+                ),
+              ),
+              CustomPaint(
+                painter: HalfCirclePainter(
+                  color: widget.color,
+                  direction: widget.direction,
+                ),
+                child: SizedBox(
+                  width: widget.width -
+                      widget.strokeWidth /
+                          (widget.direction == AxisDirection.down ||
+                                  widget.direction == AxisDirection.up
+                              ? 1
+                              : 2),
+                  height: widget.height -
+                      widget.strokeWidth /
+                          (widget.direction == AxisDirection.down ||
+                                  widget.direction == AxisDirection.up
+                              ? 2
+                              : 1),
+                ),
+              ),
+            ],
           ),
         ),
       ],
     );
   }
+
+  Alignment _alignment() {
+    switch (widget.direction) {
+      case AxisDirection.up:
+        return Alignment.topCenter;
+      case AxisDirection.right:
+        return Alignment.centerRight;
+      case AxisDirection.down:
+        return Alignment.bottomCenter;
+      case AxisDirection.left:
+        return Alignment.centerLeft;
+    }
+  }
 }
 
 class HalfCirclePainter extends CustomPainter {
   HalfCirclePainter({
-    this.color,
-    this.strokeColor,
-    this.strokeWidth = 3,
+    @required this.color,
+    this.direction = AxisDirection.down,
   });
 
   final Color color;
-  final Color strokeColor;
-  final double strokeWidth;
+  final AxisDirection direction;
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (strokeColor != null) {
-      Paint strokePaint = Paint()
-        ..color = strokeColor
-        ..strokeWidth = strokeWidth
-        ..style = PaintingStyle.stroke;
-      canvas.drawPath(getHalfCirclePath(size.width, size.height), strokePaint);
-    }
-
-    if (color != null) {
-      Paint fillPaint = Paint()
-        ..color = color
-        ..style = PaintingStyle.fill;
-      canvas.drawPath(getHalfCirclePath(size.width, size.height), fillPaint);
-    }
+    Paint fillPaint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+    canvas.drawPath(getHalfCirclePath(size.width, size.height), fillPaint);
   }
 
   Path getHalfCirclePath(double x, double y) {
     num degToRad(num deg) => deg * (math.pi / 180.0);
+
+    final offset = _getOffset(x, y);
+    final startAngle = _getStartAngle();
     return Path()
-      ..moveTo(0, y)
+      ..moveTo(offset.dx, offset.dy)
       ..arcTo(
-        Rect.fromCenter(center: Offset(x / 2, y), width: x, height: y * 2),
-        degToRad(180),
+        _getRect(x, y),
+        degToRad(startAngle),
         degToRad(180),
         false,
       );
@@ -144,45 +284,52 @@ class HalfCirclePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(HalfCirclePainter oldDelegate) {
-    return oldDelegate.color != color ||
-        oldDelegate.strokeColor != strokeColor ||
-        oldDelegate.strokeWidth != strokeWidth;
-  }
-}
-
-class HalfCirclePainter2 extends CustomPainter {
-  HalfCirclePainter2({
-    this.strokeColor = Colors.black,
-  });
-
-  final Color strokeColor;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
-      ..shader = RadialGradient(
-        colors: [Colors.white, Colors.white, Colors.white12],
-        stops: [0, 0.8, 1],
-      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height * 2))
-      ..style = PaintingStyle.fill;
-
-    canvas.drawPath(getTrianglePath(size.width, size.height), paint);
+    return oldDelegate.color != color;
   }
 
-  Path getTrianglePath(double x, double y) {
-    num degToRad(num deg) => deg * (math.pi / 180.0);
-    return Path()
-      ..moveTo(0, y)
-      ..arcTo(
-        Rect.fromCenter(center: Offset(x / 2, y), width: x, height: y * 2),
-        degToRad(180),
-        degToRad(180),
-        false,
-      );
+  Offset _getOffset(double x, double y) {
+    switch (direction) {
+      case AxisDirection.up:
+        return Offset(x, 0);
+      case AxisDirection.right:
+        return Offset(x, y);
+      case AxisDirection.down:
+        return Offset(0, y);
+      case AxisDirection.left:
+        return Offset(0, 0);
+    }
+    return null;
   }
 
-  @override
-  bool shouldRepaint(HalfCirclePainter2 oldDelegate) {
-    return oldDelegate.strokeColor != strokeColor;
+  num _getStartAngle() {
+    switch (direction) {
+      case AxisDirection.up:
+        return 0;
+      case AxisDirection.right:
+        return 90;
+      case AxisDirection.down:
+        return 180;
+      case AxisDirection.left:
+        return 270;
+    }
+    return null;
+  }
+
+  Rect _getRect(double x, double y) {
+    switch (direction) {
+      case AxisDirection.up:
+        return Rect.fromCenter(
+            center: Offset(x / 2, 0), width: x, height: y * 2);
+      case AxisDirection.right:
+        return Rect.fromCenter(
+            center: Offset(x, y / 2), width: x * 2, height: y);
+      case AxisDirection.down:
+        return Rect.fromCenter(
+            center: Offset(x / 2, y), width: x, height: y * 2);
+      case AxisDirection.left:
+        return Rect.fromCenter(
+            center: Offset(0, y / 2), width: x * 2, height: y);
+    }
+    return null;
   }
 }
