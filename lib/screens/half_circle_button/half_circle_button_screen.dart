@@ -27,7 +27,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
             child: HalfCircleButton(
               width: 324,
               height: 162,
-              strokeWidth: 52,
+              strokeWidth: 16,
               direction: AxisDirection.down,
               color: Colors.blue,
               strokeColor: Colors.lightBlue,
@@ -73,7 +73,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
             child: HalfCircleButton(
               width: 324,
               height: 162,
-              strokeWidth: 52,
+              strokeWidth: 16,
               direction: AxisDirection.up,
               color: Colors.blue,
               strokeColor: Colors.lightBlue,
@@ -216,17 +216,17 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
                 ),
                 child: SizedBox(
                   width: widget.width -
-                      widget.strokeWidth /
-                          (widget.direction == AxisDirection.down ||
-                                  widget.direction == AxisDirection.up
-                              ? 1
-                              : 2),
-                  height: widget.height -
-                      widget.strokeWidth /
+                      widget.strokeWidth *
                           (widget.direction == AxisDirection.down ||
                                   widget.direction == AxisDirection.up
                               ? 2
                               : 1),
+                  height: widget.height -
+                      widget.strokeWidth *
+                          (widget.direction == AxisDirection.down ||
+                                  widget.direction == AxisDirection.up
+                              ? 1
+                              : 2),
                 ),
               ),
             ],
@@ -247,6 +247,7 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
       case AxisDirection.left:
         return Alignment.centerLeft;
     }
+    return null;
   }
 }
 
