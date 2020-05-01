@@ -12,101 +12,142 @@ class HalfCircleButtonScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('HalfCircleButton'),
       ),
+      backgroundColor: Colors.blueGrey,
       body: Stack(
         children: <Widget>[
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              color: Colors.black,
-              width: 324,
-              height: 162,
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: HalfCircleButton(
-              width: 324,
-              height: 162,
-              strokeWidth: 16,
-              direction: AxisDirection.down,
-              color: Colors.blue,
-              strokeColor: Colors.lightBlue,
-              hightColor: Colors.white,
-              onTap: () {
-                print('tap!!!!');
-              },
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              color: Colors.black,
-              width: 95,
-              height: 190,
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: HalfCircleButton(
-              width: 95,
-              height: 190,
-              strokeWidth: 16,
-              direction: AxisDirection.right,
-              color: Colors.blue,
-              strokeColor: Colors.lightBlue,
-              hightColor: Colors.white,
-              onTap: () {
-                print('tap!!!!');
-              },
-            ),
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              color: Colors.black,
-              width: 324,
-              height: 162,
-            ),
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: HalfCircleButton(
-              width: 324,
-              height: 162,
-              strokeWidth: 16,
-              direction: AxisDirection.up,
-              color: Colors.blue,
-              strokeColor: Colors.lightBlue,
-              hightColor: Colors.white,
-              onTap: () {
-                print('tap!!!!');
-              },
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              color: Colors.black,
-              width: 95,
-              height: 190,
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: HalfCircleButton(
-              width: 95,
-              height: 190,
-              strokeWidth: 16,
-              direction: AxisDirection.left,
-              color: Colors.blue,
-              strokeColor: Colors.lightBlue,
-              hightColor: Colors.white,
-              onTap: () {
-                print('tap!!!!');
-              },
-            ),
-          ),
+          _buildTop(context),
+          _buildRight(context),
+          _buildBottom(context),
+          _buildLeft(context),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTop(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: HalfCircleButton(
+        width: 324,
+        height: 162,
+        strokeWidth: 16,
+        direction: AxisDirection.up,
+        color: Colors.blue,
+        strokeColor: Colors.lightBlue,
+        hightColor: Colors.yellow,
+        onTap: () {
+          print('tap!!!!');
+        },
+        child: Center(
+          child: Text(
+            'Top button',
+            style: Theme.of(context).textTheme.display1.copyWith(
+                  color: Colors.white,
+                ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRight(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            color: Colors.black,
+            width: 95,
+            height: 190,
+          ),
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: HalfCircleButton(
+            width: 95,
+            height: 190,
+            strokeWidth: 16,
+            direction: AxisDirection.right,
+            color: Colors.blue,
+            strokeColor: Colors.lightBlue,
+            hightColor: Colors.white,
+            onTap: () {
+              print('tap!!!!');
+            },
+            child: Container(
+              alignment: Alignment.centerRight,
+              child: Transform.rotate(
+                angle: -math.pi / 2,
+                child: Text(
+                  'Right\nbutton',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.title.copyWith(
+                        color: Colors.white,
+                      ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBottom(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            color: Colors.black,
+            width: 324,
+            height: 162,
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: HalfCircleButton(
+            width: 324,
+            height: 162,
+            strokeWidth: 16,
+            direction: AxisDirection.down,
+            color: Colors.blue,
+            strokeColor: Colors.lightBlue,
+            hightColor: Colors.white,
+            onTap: () {
+              print('tap!!!!');
+            },
+            child: SafeArea(
+              child: Container(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  'Bottom button',
+                  style: Theme.of(context).textTheme.display1.copyWith(
+                        color: Colors.white,
+                      ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLeft(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: HalfCircleButton(
+        width: 95,
+        height: 190,
+        strokeWidth: 16,
+        direction: AxisDirection.left,
+        color: Colors.blue,
+        strokeColor: Colors.lightBlue,
+        hightColor: Colors.white,
+        onTap: () {
+          print('tap!!!!');
+        },
       ),
     );
   }
@@ -122,6 +163,7 @@ class HalfCircleButton extends StatefulWidget {
     this.strokeColor,
     this.hightColor,
     this.onTap,
+    this.child,
   });
 
   final double width;
@@ -132,6 +174,7 @@ class HalfCircleButton extends StatefulWidget {
   final Color strokeColor;
   final Color hightColor;
   final GestureTapCallback onTap;
+  final Widget child;
 
   @override
   _HalfCircleButtonState createState() => _HalfCircleButtonState();
@@ -194,6 +237,7 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
           },
           onTapDown: _handleTapDown,
           onTapCancel: _handleTapCancel,
+          behavior: HitTestBehavior.deferToChild,
           child: Stack(
             alignment: alignment,
             children: <Widget>[
@@ -226,6 +270,13 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
                               : 2),
                 ),
               ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: widget.child ?? Container(),
+              ),
             ],
           ),
         ),
@@ -257,15 +308,26 @@ class HalfCirclePainter extends CustomPainter {
   final Color color;
   final AxisDirection direction;
 
+  Path _path;
+
   @override
   void paint(Canvas canvas, Size size) {
+    _path = _getHalfCirclePath(size.width, size.height);
     Paint paint = Paint()
       ..color = color
       ..style = PaintingStyle.fill;
     canvas.drawPath(
-      _getHalfCirclePath(size.width, size.height),
+      _path,
       paint,
     );
+  }
+
+  @override
+  bool hitTest(Offset position) {
+    if (_path == null) {
+      return false;
+    }
+    return _path.contains(position);
   }
 
   Path _getHalfCirclePath(double x, double y) {
