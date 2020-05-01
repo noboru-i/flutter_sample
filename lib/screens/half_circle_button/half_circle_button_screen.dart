@@ -183,10 +183,7 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
                 color: widget.hightColor,
                 direction: widget.direction,
               ),
-              child: SizedBox(
-                width: widget.width,
-                height: widget.height,
-              ),
+              size: Size(widget.width, widget.height),
             ),
           ),
         ),
@@ -206,10 +203,7 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
                   color: widget.strokeColor,
                   direction: widget.direction,
                 ),
-                child: SizedBox(
-                  width: widget.width,
-                  height: widget.height,
-                ),
+                size: Size(widget.width, widget.height),
               ),
               // inner circle
               CustomPaint(
@@ -217,14 +211,14 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
                   color: widget.color,
                   direction: widget.direction,
                 ),
-                child: SizedBox(
-                  width: widget.width -
+                size: Size(
+                  widget.width -
                       widget.strokeWidth *
                           (widget.direction == AxisDirection.down ||
                                   widget.direction == AxisDirection.up
                               ? 2
                               : 1),
-                  height: widget.height -
+                  widget.height -
                       widget.strokeWidth *
                           (widget.direction == AxisDirection.down ||
                                   widget.direction == AxisDirection.up
@@ -265,13 +259,16 @@ class HalfCirclePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint fillPaint = Paint()
+    Paint paint = Paint()
       ..color = color
       ..style = PaintingStyle.fill;
-    canvas.drawPath(getHalfCirclePath(size.width, size.height), fillPaint);
+    canvas.drawPath(
+      _getHalfCirclePath(size.width, size.height),
+      paint,
+    );
   }
 
-  Path getHalfCirclePath(double x, double y) {
+  Path _getHalfCirclePath(double x, double y) {
     num degToRad(num deg) => deg * (math.pi / 180.0);
 
     final offset = _getOffset(x, y);
@@ -288,7 +285,7 @@ class HalfCirclePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(HalfCirclePainter oldDelegate) {
-    return oldDelegate.color != color;
+    return oldDelegate.color != color || oldDelegate.direction != direction;
   }
 
   Offset _getOffset(double x, double y) {
