@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/screens/bounce_button/bounce_button.dart';
 
 class HalfCircleButtonScreen extends StatelessWidget {
   static const routeName = '/half_circle_button';
@@ -36,7 +37,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
         strokeColor: Colors.lightBlue,
         hightColor: Colors.yellow,
         onTap: () {
-          print('tap!!!!');
+          print('tapped top button');
         },
         child: Center(
           child: Text(
@@ -72,7 +73,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
             strokeColor: Colors.lightBlue,
             hightColor: Colors.white,
             onTap: () {
-              print('tap!!!!');
+              print('tapped right button');
             },
             child: Container(
               alignment: Alignment.centerRight,
@@ -115,7 +116,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
             strokeColor: Colors.lightBlue,
             hightColor: Colors.white,
             onTap: () {
-              print('tap!!!!');
+              print('tapped bottom button');
             },
             child: SafeArea(
               child: Container(
@@ -137,17 +138,23 @@ class HalfCircleButtonScreen extends StatelessWidget {
   Widget _buildLeft(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
-      child: HalfCircleButton(
-        width: 95,
-        height: 190,
-        strokeWidth: 16,
-        direction: AxisDirection.left,
-        color: Colors.blue,
-        strokeColor: Colors.lightBlue,
-        hightColor: Colors.white,
-        onTap: () {
-          print('tap!!!!');
+      child: BounceAnimation(
+        scaleAlignment: Alignment.centerLeft,
+        onPressed: () {
+          print('tapped left button');
         },
+        child: AbsorbPointer(
+          child: HalfCircleButton(
+            width: 95,
+            height: 190,
+            strokeWidth: 16,
+            direction: AxisDirection.left,
+            color: Colors.blue,
+            strokeColor: Colors.lightBlue,
+            hightColor: Colors.transparent,
+            onTap: null,
+          ),
+        ),
       ),
     );
   }

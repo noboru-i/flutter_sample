@@ -68,7 +68,8 @@ class BounceAnimation extends StatefulWidget {
     this.onLongPress,
     this.child,
     this.ratio = 0.95,
-    this.animationDuration,
+    this.animationDuration = kThemeChangeDuration,
+    this.scaleAlignment = Alignment.center,
   });
 
   final VoidCallback onPressed;
@@ -76,6 +77,7 @@ class BounceAnimation extends StatefulWidget {
   final Widget child;
   final double ratio;
   final Duration animationDuration;
+  final Alignment scaleAlignment;
 
   bool get enabled => onPressed != null || onLongPress != null;
 
@@ -141,6 +143,7 @@ class _BounceAnimationState extends State<BounceAnimation>
       onLongPress: widget.onLongPress,
       child: ScaleTransition(
         scale: _scale,
+        alignment: widget.scaleAlignment,
         child: widget.child,
       ),
     );
