@@ -101,19 +101,28 @@ class HalfCircleButtonScreen extends StatelessWidget {
   Widget _buildBottom(BuildContext context) {
     return Stack(
       children: <Widget>[
+        // For iPhone 11 Pro
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            color: Colors.white,
+            width: 327,
+            height: 163.5,
+          ),
+        ),
+        // For iPhone SE 1st
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
             color: Colors.black,
-            width: 324,
-            height: 162,
+            width: 272,
+            height: 136,
           ),
         ),
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            width: 324,
-            height: 162,
+            padding: EdgeInsets.symmetric(horizontal: 24),
             child: BounceAnimation(
               scaleAlignment: Alignment.bottomCenter,
               onPressed: () {
@@ -231,65 +240,71 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
   Widget build(BuildContext context) {
     final alignment = _alignment();
 
-    return Stack(
-      children: <Widget>[
-        AnimatedOpacity(
-          opacity: isHighlight ? 1 : 0,
-          duration: Duration(milliseconds: 200),
-          child: Transform.scale(
-            scale: widget.scale,
-            alignment: alignment,
-            child: CustomPaint(
-              painter: HalfCirclePainter(
-                color: widget.hightColor,
-                direction: widget.direction,
-              ),
-              child: Container(),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            _handleTap(context);
-            widget.onTap();
-          },
-          onTapDown: _handleTapDown,
-          onTapCancel: _handleTapCancel,
-          behavior: HitTestBehavior.deferToChild,
-          child: Stack(
-            alignment: alignment,
-            children: <Widget>[
-              // outer circle
-              CustomPaint(
+    return AspectRatio(
+      aspectRatio: widget.direction == AxisDirection.up ||
+              widget.direction == AxisDirection.down
+          ? 2 / 1
+          : 1 / 2,
+      child: Stack(
+        children: <Widget>[
+          AnimatedOpacity(
+            opacity: isHighlight ? 1 : 0,
+            duration: Duration(milliseconds: 200),
+            child: Transform.scale(
+              scale: widget.scale,
+              alignment: alignment,
+              child: CustomPaint(
                 painter: HalfCirclePainter(
-                  color: widget.strokeColor,
+                  color: widget.hightColor,
                   direction: widget.direction,
                 ),
                 child: Container(),
               ),
-              // inner circle
-              Container(
-                padding: _edgeInsets(),
-                alignment: alignment,
-                child: CustomPaint(
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              _handleTap(context);
+              widget.onTap();
+            },
+            onTapDown: _handleTapDown,
+            onTapCancel: _handleTapCancel,
+            behavior: HitTestBehavior.deferToChild,
+            child: Stack(
+              alignment: alignment,
+              children: <Widget>[
+                // outer circle
+                CustomPaint(
                   painter: HalfCirclePainter(
-                    color: widget.color,
+                    color: widget.strokeColor,
                     direction: widget.direction,
                   ),
                   child: Container(),
                 ),
-              ),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: widget.child ?? Container(),
-              ),
-            ],
+                // inner circle
+                Container(
+                  padding: _edgeInsets(),
+                  alignment: alignment,
+                  child: CustomPaint(
+                    painter: HalfCirclePainter(
+                      color: widget.color,
+                      direction: widget.direction,
+                    ),
+                    child: Container(),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: widget.child ?? Container(),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
