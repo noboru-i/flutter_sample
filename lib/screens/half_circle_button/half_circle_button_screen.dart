@@ -28,23 +28,25 @@ class HalfCircleButtonScreen extends StatelessWidget {
   Widget _buildTop(BuildContext context) {
     return Align(
       alignment: Alignment.topCenter,
-      child: HalfCircleButton(
+      child: Container(
         width: 324,
         height: 162,
-        strokeWidth: 16,
-        direction: AxisDirection.up,
-        color: Colors.blue,
-        strokeColor: Colors.lightBlue,
-        hightColor: Colors.yellow,
-        onTap: () {
-          print('tapped top button');
-        },
-        child: Center(
-          child: Text(
-            'Top button',
-            style: Theme.of(context).textTheme.display1.copyWith(
-                  color: Colors.white,
-                ),
+        child: HalfCircleButton(
+          strokeWidth: 16,
+          direction: AxisDirection.up,
+          color: Colors.blue,
+          strokeColor: Colors.lightBlue,
+          hightColor: Colors.yellow,
+          onTap: () {
+            print('tapped top button');
+          },
+          child: Center(
+            child: Text(
+              'Top button',
+              style: Theme.of(context).textTheme.display1.copyWith(
+                    color: Colors.white,
+                  ),
+            ),
           ),
         ),
       ),
@@ -64,27 +66,29 @@ class HalfCircleButtonScreen extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.centerRight,
-          child: HalfCircleButton(
+          child: Container(
             width: 95,
             height: 190,
-            strokeWidth: 16,
-            direction: AxisDirection.right,
-            color: Colors.blue,
-            strokeColor: Colors.lightBlue,
-            hightColor: Colors.white,
-            onTap: () {
-              print('tapped right button');
-            },
-            child: Container(
-              alignment: Alignment.centerRight,
-              child: Transform.rotate(
-                angle: -math.pi / 2,
-                child: Text(
-                  'Right\nbutton',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.title.copyWith(
-                        color: Colors.white,
-                      ),
+            child: HalfCircleButton(
+              strokeWidth: 16,
+              direction: AxisDirection.right,
+              color: Colors.blue,
+              strokeColor: Colors.lightBlue,
+              hightColor: Colors.white,
+              onTap: () {
+                print('tapped right button');
+              },
+              child: Container(
+                alignment: Alignment.centerRight,
+                child: Transform.rotate(
+                  angle: -math.pi / 2,
+                  child: Text(
+                    'Right\nbutton',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.title.copyWith(
+                          color: Colors.white,
+                        ),
+                  ),
                 ),
               ),
             ),
@@ -107,29 +111,31 @@ class HalfCircleButtonScreen extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.bottomCenter,
-          child: BounceAnimation(
-            scaleAlignment: Alignment.bottomCenter,
-            onPressed: () {
-              print('tapped bottom button');
-            },
-            child: AbsorbPointer(
-              child: HalfCircleButton(
-                width: 324,
-                height: 162,
-                strokeWidth: 16,
-                direction: AxisDirection.down,
-                color: Colors.blue,
-                strokeColor: Colors.lightBlue,
-                hightColor: Colors.white,
-                onTap: null,
-                child: SafeArea(
-                  child: Container(
-                    alignment: Alignment.bottomCenter,
-                    child: Text(
-                      'Bottom button',
-                      style: Theme.of(context).textTheme.display1.copyWith(
-                            color: Colors.white,
-                          ),
+          child: Container(
+            width: 324,
+            height: 162,
+            child: BounceAnimation(
+              scaleAlignment: Alignment.bottomCenter,
+              onPressed: () {
+                print('tapped bottom button');
+              },
+              child: AbsorbPointer(
+                child: HalfCircleButton(
+                  strokeWidth: 16,
+                  direction: AxisDirection.down,
+                  color: Colors.blue,
+                  strokeColor: Colors.lightBlue,
+                  hightColor: Colors.white,
+                  onTap: null,
+                  child: SafeArea(
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Text(
+                        'Bottom button',
+                        style: Theme.of(context).textTheme.display1.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
                     ),
                   ),
                 ),
@@ -144,21 +150,23 @@ class HalfCircleButtonScreen extends StatelessWidget {
   Widget _buildLeft(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
-      child: BounceAnimation(
-        scaleAlignment: Alignment.centerLeft,
-        onPressed: () {
-          print('tapped left button');
-        },
-        child: AbsorbPointer(
-          child: HalfCircleButton(
-            width: 95,
-            height: 190,
-            strokeWidth: 16,
-            direction: AxisDirection.left,
-            color: Colors.blue,
-            strokeColor: Colors.lightBlue,
-            hightColor: Colors.transparent,
-            onTap: null,
+      child: Container(
+        width: 95,
+        height: 190,
+        child: BounceAnimation(
+          scaleAlignment: Alignment.centerLeft,
+          onPressed: () {
+            print('tapped left button');
+          },
+          child: AbsorbPointer(
+            child: HalfCircleButton(
+              strokeWidth: 16,
+              direction: AxisDirection.left,
+              color: Colors.blue,
+              strokeColor: Colors.lightBlue,
+              hightColor: Colors.transparent,
+              onTap: null,
+            ),
           ),
         ),
       ),
@@ -168,9 +176,8 @@ class HalfCircleButtonScreen extends StatelessWidget {
 
 class HalfCircleButton extends StatefulWidget {
   HalfCircleButton({
-    this.width,
-    this.height,
     this.strokeWidth,
+    this.scale = 1.1,
     this.direction,
     this.color,
     this.strokeColor,
@@ -179,9 +186,8 @@ class HalfCircleButton extends StatefulWidget {
     this.child,
   });
 
-  final double width;
-  final double height;
   final double strokeWidth;
+  final double scale;
   final AxisDirection direction;
   final Color color;
   final Color strokeColor;
@@ -224,7 +230,6 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
   @override
   Widget build(BuildContext context) {
     final alignment = _alignment();
-    final radius = widget.width > widget.height ? widget.height : widget.width;
 
     return Stack(
       children: <Widget>[
@@ -232,14 +237,14 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
           opacity: isHighlight ? 1 : 0,
           duration: Duration(milliseconds: 200),
           child: Transform.scale(
-            scale: (radius + widget.strokeWidth) / radius,
+            scale: widget.scale,
             alignment: alignment,
             child: CustomPaint(
               painter: HalfCirclePainter(
                 color: widget.hightColor,
                 direction: widget.direction,
               ),
-              size: Size(widget.width, widget.height),
+              child: Container(),
             ),
           ),
         ),
@@ -260,27 +265,18 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
                   color: widget.strokeColor,
                   direction: widget.direction,
                 ),
-                size: Size(widget.width, widget.height),
+                child: Container(),
               ),
               // inner circle
-              CustomPaint(
-                painter: HalfCirclePainter(
-                  color: widget.color,
-                  direction: widget.direction,
-                ),
-                size: Size(
-                  widget.width -
-                      widget.strokeWidth *
-                          (widget.direction == AxisDirection.down ||
-                                  widget.direction == AxisDirection.up
-                              ? 2
-                              : 1),
-                  widget.height -
-                      widget.strokeWidth *
-                          (widget.direction == AxisDirection.down ||
-                                  widget.direction == AxisDirection.up
-                              ? 1
-                              : 2),
+              Container(
+                padding: _edgeInsets(),
+                alignment: alignment,
+                child: CustomPaint(
+                  painter: HalfCirclePainter(
+                    color: widget.color,
+                    direction: widget.direction,
+                  ),
+                  child: Container(),
                 ),
               ),
               Positioned(
@@ -307,6 +303,24 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
         return Alignment.bottomCenter;
       case AxisDirection.left:
         return Alignment.centerLeft;
+    }
+    return null;
+  }
+
+  EdgeInsets _edgeInsets() {
+    switch (widget.direction) {
+      case AxisDirection.up:
+        return EdgeInsets.symmetric(horizontal: widget.strokeWidth) +
+            EdgeInsets.only(bottom: widget.strokeWidth);
+      case AxisDirection.right:
+        return EdgeInsets.symmetric(vertical: widget.strokeWidth) +
+            EdgeInsets.only(left: widget.strokeWidth);
+      case AxisDirection.down:
+        return EdgeInsets.symmetric(horizontal: widget.strokeWidth) +
+            EdgeInsets.only(top: widget.strokeWidth);
+      case AxisDirection.left:
+        return EdgeInsets.symmetric(vertical: widget.strokeWidth) +
+            EdgeInsets.only(right: widget.strokeWidth);
     }
     return null;
   }
