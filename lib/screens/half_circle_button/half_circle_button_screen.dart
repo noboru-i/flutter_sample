@@ -36,7 +36,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
           direction: AxisDirection.up,
           color: Colors.blue,
           strokeColor: Colors.lightBlue,
-          hightColor: Colors.yellow,
+          highlightColor: Colors.yellow,
           onTap: () {
             print('tapped top button');
           },
@@ -74,7 +74,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
               direction: AxisDirection.right,
               color: Colors.blue,
               strokeColor: Colors.lightBlue,
-              hightColor: Colors.white,
+              highlightColor: Colors.white,
               onTap: () {
                 print('tapped right button');
               },
@@ -134,7 +134,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
                   direction: AxisDirection.down,
                   color: Colors.blue,
                   strokeColor: Colors.lightBlue,
-                  hightColor: Colors.white,
+                  highlightColor: Colors.white,
                   onTap: null,
                   child: SafeArea(
                     child: Container(
@@ -173,7 +173,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
               direction: AxisDirection.left,
               color: Colors.blue,
               strokeColor: Colors.lightBlue,
-              hightColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               onTap: null,
             ),
           ),
@@ -186,21 +186,21 @@ class HalfCircleButtonScreen extends StatelessWidget {
 class HalfCircleButton extends StatefulWidget {
   HalfCircleButton({
     this.strokeWidth,
-    this.scale = 1.1,
+    this.tapHighlightScale = 1.1,
     this.direction,
     this.color,
     this.strokeColor,
-    this.hightColor,
+    this.highlightColor,
     this.onTap,
     this.child,
   });
 
   final double strokeWidth;
-  final double scale;
+  final double tapHighlightScale;
   final AxisDirection direction;
   final Color color;
   final Color strokeColor;
-  final Color hightColor;
+  final Color highlightColor;
   final GestureTapCallback onTap;
   final Widget child;
 
@@ -247,21 +247,23 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
           : 1 / 2,
       child: Stack(
         children: <Widget>[
+          // tap highlight
           AnimatedOpacity(
             opacity: isHighlight ? 1 : 0,
             duration: Duration(milliseconds: 200),
             child: Transform.scale(
-              scale: widget.scale,
+              scale: widget.tapHighlightScale,
               alignment: alignment,
               child: CustomPaint(
                 painter: HalfCirclePainter(
-                  color: widget.hightColor,
+                  color: widget.highlightColor,
                   direction: widget.direction,
                 ),
                 child: Container(),
               ),
             ),
           ),
+          // button area
           GestureDetector(
             onTap: () {
               _handleTap(context);
@@ -424,16 +426,28 @@ class HalfCirclePainter extends CustomPainter {
     switch (direction) {
       case AxisDirection.up:
         return Rect.fromCenter(
-            center: Offset(x / 2, 0), width: x, height: y * 2);
+          center: Offset(x / 2, 0),
+          width: x,
+          height: y * 2,
+        );
       case AxisDirection.right:
         return Rect.fromCenter(
-            center: Offset(x, y / 2), width: x * 2, height: y);
+          center: Offset(x, y / 2),
+          width: x * 2,
+          height: y,
+        );
       case AxisDirection.down:
         return Rect.fromCenter(
-            center: Offset(x / 2, y), width: x, height: y * 2);
+          center: Offset(x / 2, y),
+          width: x,
+          height: y * 2,
+        );
       case AxisDirection.left:
         return Rect.fromCenter(
-            center: Offset(0, y / 2), width: x * 2, height: y);
+          center: Offset(0, y / 2),
+          width: x * 2,
+          height: y,
+        );
     }
     return null;
   }
