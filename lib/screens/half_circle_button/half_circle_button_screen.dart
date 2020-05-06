@@ -107,25 +107,31 @@ class HalfCircleButtonScreen extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.bottomCenter,
-          child: HalfCircleButton(
-            width: 324,
-            height: 162,
-            strokeWidth: 16,
-            direction: AxisDirection.down,
-            color: Colors.blue,
-            strokeColor: Colors.lightBlue,
-            hightColor: Colors.white,
-            onTap: () {
+          child: BounceAnimation(
+            scaleAlignment: Alignment.bottomCenter,
+            onPressed: () {
               print('tapped bottom button');
             },
-            child: SafeArea(
-              child: Container(
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  'Bottom button',
-                  style: Theme.of(context).textTheme.display1.copyWith(
-                        color: Colors.white,
-                      ),
+            child: AbsorbPointer(
+              child: HalfCircleButton(
+                width: 324,
+                height: 162,
+                strokeWidth: 16,
+                direction: AxisDirection.down,
+                color: Colors.blue,
+                strokeColor: Colors.lightBlue,
+                hightColor: Colors.white,
+                onTap: null,
+                child: SafeArea(
+                  child: Container(
+                    alignment: Alignment.bottomCenter,
+                    child: Text(
+                      'Bottom button',
+                      style: Theme.of(context).textTheme.display1.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                  ),
                 ),
               ),
             ),
