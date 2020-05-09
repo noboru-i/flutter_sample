@@ -14,6 +14,8 @@ class BounceButtonScreen extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(8),
           children: <Widget>[
+            Text('Large'),
+            _ListItem0(),
             Text('enabled'),
             _ListItem1(),
             Text('disabled'),
@@ -44,6 +46,26 @@ class BounceButtonScreen extends StatelessWidget {
             _ListItem11(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ListItem0 extends StatelessWidget {
+  void _onPressed(BuildContext context) {
+    Scaffold.of(context).showSnackBar(new SnackBar(
+      content: new Text('pressed!'),
+    ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 40),
+      constraints: BoxConstraints.expand(height: 150),
+      child: BounceButton(
+        onPressed: () => _onPressed(context),
+        child: Text('BounceButton'),
       ),
     );
   }
