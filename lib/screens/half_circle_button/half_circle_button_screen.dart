@@ -211,7 +211,7 @@ class HalfCircleButton extends StatefulWidget {
 class _HalfCircleButtonState extends State<HalfCircleButton> {
   bool isHighlight = false;
 
-  void _handleTapDown(TapDownDetails details) {
+  void _showHighlight(TapDownDetails details) {
     setState(() {
       isHighlight = true;
     });
@@ -224,13 +224,7 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
     });
   }
 
-  void _handleTap(BuildContext context) {
-    setState(() {
-      isHighlight = false;
-    });
-  }
-
-  void _handleTapCancel() {
+  void _hideHighlight() {
     setState(() {
       isHighlight = false;
     });
@@ -266,11 +260,11 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
           // button area
           GestureDetector(
             onTap: () {
-              _handleTap(context);
+              _hideHighlight();
               widget.onTap();
             },
-            onTapDown: _handleTapDown,
-            onTapCancel: _handleTapCancel,
+            onTapDown: _showHighlight,
+            onTapCancel: _hideHighlight,
             behavior: HitTestBehavior.deferToChild,
             child: Stack(
               alignment: alignment,
