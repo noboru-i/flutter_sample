@@ -18,7 +18,7 @@ class _BalloonState extends State<Balloon> with SingleTickerProviderStateMixin {
     super.initState();
 
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: kThemeAnimationDuration,
       vsync: this,
     )..addStatusListener((status) {
         if (status == AnimationStatus.dismissed) {
@@ -65,10 +65,10 @@ class _BalloonState extends State<Balloon> with SingleTickerProviderStateMixin {
       builder: (BuildContext context) => _BalloonOverlay(
         animation: CurvedAnimation(
           parent: _controller,
-          curve: Curves.fastOutSlowIn,
+          curve: Curves.easeInOut,
         ),
         target: target,
-        removeSelf: () {
+        removeOverlay: () {
           _controller.reverse();
         },
       ),
@@ -82,12 +82,12 @@ class _BalloonOverlay extends StatelessWidget {
   const _BalloonOverlay({
     this.animation,
     this.target,
-    this.removeSelf,
+    this.removeOverlay,
   });
 
   final Animation<double> animation;
   final Offset target;
-  final Function removeSelf;
+  final Function removeOverlay;
 
   static const heightBox = 52.0;
   static const heightTriangle = 7.0;
@@ -100,9 +100,7 @@ class _BalloonOverlay extends StatelessWidget {
       children: <Widget>[
         Positioned.fill(
           child: GestureDetector(
-            onTap: () {
-              removeSelf();
-            },
+            onTap: removeOverlay,
             child: Container(
               color: Colors.transparent,
             ),
@@ -139,7 +137,7 @@ class _BalloonOverlay extends StatelessWidget {
                 _buildLeftButton(context),
                 Container(
                   width: 1,
-                  height: 23,
+                  margin: EdgeInsets.symmetric(vertical: 15),
                   color: const Color(0xFFEAEAEA),
                 ),
                 _buildRightButton(context),
@@ -161,7 +159,7 @@ class _BalloonOverlay extends StatelessWidget {
     return InkWell(
       onTap: () {
         print('Tap Sample1');
-        removeSelf();
+        removeOverlay();
       },
       customBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -186,7 +184,7 @@ class _BalloonOverlay extends StatelessWidget {
     return InkWell(
       onTap: () {
         print('Tap Sample2');
-        removeSelf();
+        removeOverlay();
       },
       customBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
