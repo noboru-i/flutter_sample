@@ -20,7 +20,11 @@ class _BalloonState extends State<Balloon> with SingleTickerProviderStateMixin {
     _controller = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
-    );
+    )..addStatusListener((status) {
+        if (status == AnimationStatus.dismissed) {
+          _removeEntry();
+        }
+      });
   }
 
   @override
@@ -40,23 +44,22 @@ class _BalloonState extends State<Balloon> with SingleTickerProviderStateMixin {
 
   void _handleOnTap() {
     if (_entry != null) {
-      _removeEntry();
+      _controller.reverse();
       return;
     }
 
-    print('tap PlaybackBalloon');
     _createNewEntry();
     _controller.forward();
   }
 
   void _removeEntry() {
-    _entry.remove();
+    _entry?.remove();
     _entry = null;
   }
 
   void _createNewEntry() {
     final box = context.findRenderObject() as RenderBox;
-    final target = box.localToGlobal(box.size.center(Offset.zero));
+    final target = box.localToGlobal(Offset.zero);
 
     final Widget overlay = _BalloonOverlay(
       animation: CurvedAnimation(
@@ -64,6 +67,9 @@ class _BalloonState extends State<Balloon> with SingleTickerProviderStateMixin {
         curve: Curves.fastOutSlowIn,
       ),
       target: target,
+      removeSelf: () {
+        _controller.reverse();
+      },
     );
     _entry = OverlayEntry(builder: (BuildContext context) => overlay);
     Overlay.of(context, debugRequiredFor: widget).insert(_entry);
@@ -75,97 +81,104 @@ class _BalloonOverlay extends StatelessWidget {
   const _BalloonOverlay({
     this.animation,
     this.target,
+    this.removeSelf,
   });
 
   final Animation<double> animation;
   final Offset target;
+  final Function removeSelf;
+
+  static const heightBox = 52.0;
+  static const heightTriangle = 7.0;
+  static const space = 7.0;
+  static const borderRadius = 10.0;
 
   @override
   Widget build(BuildContext context) {
-    final decoration = BoxDecoration(
-      color: Colors.white,
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
+    return Positioned(
+      left: target.dx,
+      top: target.dy - (heightBox + heightTriangle + space),
+      height: heightBox + heightTriangle,
+      child: FadeTransition(
+        opacity: animation,
+        child: _buildButtons(context),
+      ),
     );
-    const padding = EdgeInsets.symmetric(horizontal: 16.0);
+  }
+
+  Widget _buildButtons(BuildContext context) {
     final textStyle = Theme.of(context).textTheme.bodyText1.copyWith(
           fontSize: 14,
         );
 
-    return Positioned.fill(
-      child: IgnorePointer(
-        child: CustomSingleChildLayout(
-          delegate: _TooltipPositionDelegate(
-            target: target,
-          ),
-          child: FadeTransition(
-            opacity: animation,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: 52,
-              ),
-              child: Container(
-                decoration: decoration,
-                padding: padding,
-                child: Center(
-                  widthFactor: 1.0,
-                  heightFactor: 1.0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Sample1',
-                        style: textStyle,
-                      ),
-                      const SizedBox(width: 13),
-                      Container(
-                        width: 1,
-                        height: 23,
-                        color: const Color(0xFFEAEAEA),
-                      ),
-                      const SizedBox(width: 13),
-                      Text(
-                        'Sample2',
-                        style: textStyle,
-                      ),
-                    ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Material(
+          elevation: 2,
+          borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+          child: Container(
+            height: heightBox,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                InkWell(
+                  onTap: () {
+                    print('Tap Sample1');
+                    removeSelf();
+                  },
+                  customBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(borderRadius),
+                      bottomLeft: Radius.circular(borderRadius),
+                    ),
+                  ),
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(
+                      'Sample1',
+                      style: textStyle,
+                    ),
                   ),
                 ),
-              ),
+                Container(
+                  width: 1,
+                  height: 23,
+                  color: const Color(0xFFEAEAEA),
+                ),
+                InkWell(
+                  onTap: () {
+                    print('Tap Sample2');
+                    removeSelf();
+                  },
+                  customBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(borderRadius),
+                      bottomRight: Radius.circular(borderRadius),
+                    ),
+                  ),
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(
+                      'Sample2',
+                      style: textStyle,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-      ),
+        Container(
+          color: Colors.white,
+          margin: EdgeInsets.only(left: 20),
+          width: 8,
+          height: heightTriangle,
+        ),
+      ],
     );
-  }
-}
-
-// inspired by _TooltipPositionDelegate from material/tooltip.dart.
-class _TooltipPositionDelegate extends SingleChildLayoutDelegate {
-  _TooltipPositionDelegate({
-    @required this.target,
-  });
-
-  final Offset target;
-
-  @override
-  BoxConstraints getConstraintsForChild(BoxConstraints constraints) =>
-      constraints.loosen();
-
-  @override
-  Offset getPositionForChild(Size size, Size childSize) {
-    print('target $target');
-    print('childSize $childSize');
-    return positionDependentBox(
-      size: size,
-      childSize: childSize,
-      target: target,
-      verticalOffset: childSize.height,
-      preferBelow: false,
-    );
-  }
-
-  @override
-  bool shouldRelayout(_TooltipPositionDelegate oldDelegate) {
-    return target != oldDelegate.target;
   }
 }
