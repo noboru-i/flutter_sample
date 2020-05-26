@@ -96,14 +96,28 @@ class _BalloonOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      left: target.dx,
-      top: target.dy - (heightBox + heightTriangle + space),
-      height: heightBox + heightTriangle,
-      child: FadeTransition(
-        opacity: animation,
-        child: _buildBalloon(context),
-      ),
+    return Stack(
+      children: <Widget>[
+        Positioned.fill(
+          child: GestureDetector(
+            onTap: () {
+              removeSelf();
+            },
+            child: Container(
+              color: Colors.transparent,
+            ),
+          ),
+        ),
+        Positioned(
+          left: target.dx,
+          top: target.dy - (heightBox + heightTriangle + space),
+          height: heightBox + heightTriangle,
+          child: FadeTransition(
+            opacity: animation,
+            child: _buildBalloon(context),
+          ),
+        ),
+      ],
     );
   }
 
