@@ -61,17 +61,18 @@ class _BalloonState extends State<Balloon> with SingleTickerProviderStateMixin {
     final box = context.findRenderObject() as RenderBox;
     final target = box.localToGlobal(Offset.zero);
 
-    final Widget overlay = _BalloonOverlay(
-      animation: CurvedAnimation(
-        parent: _controller,
-        curve: Curves.fastOutSlowIn,
+    _entry = OverlayEntry(
+      builder: (BuildContext context) => _BalloonOverlay(
+        animation: CurvedAnimation(
+          parent: _controller,
+          curve: Curves.fastOutSlowIn,
+        ),
+        target: target,
+        removeSelf: () {
+          _controller.reverse();
+        },
       ),
-      target: target,
-      removeSelf: () {
-        _controller.reverse();
-      },
     );
-    _entry = OverlayEntry(builder: (BuildContext context) => overlay);
     Overlay.of(context, debugRequiredFor: widget).insert(_entry);
   }
 }
@@ -101,73 +102,33 @@ class _BalloonOverlay extends StatelessWidget {
       height: heightBox + heightTriangle,
       child: FadeTransition(
         opacity: animation,
-        child: _buildButtons(context),
+        child: _buildBalloon(context),
       ),
     );
   }
 
-  Widget _buildButtons(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.bodyText1.copyWith(
-          fontSize: 14,
-        );
-
+  Widget _buildBalloon(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Material(
           elevation: 2,
-          borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(borderRadius),
+          ),
           child: Container(
             height: heightBox,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                InkWell(
-                  onTap: () {
-                    print('Tap Sample1');
-                    removeSelf();
-                  },
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(borderRadius),
-                      bottomLeft: Radius.circular(borderRadius),
-                    ),
-                  ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Text(
-                      'Sample1',
-                      style: textStyle,
-                    ),
-                  ),
-                ),
+                _buildLeftButton(context),
                 Container(
                   width: 1,
                   height: 23,
                   color: const Color(0xFFEAEAEA),
                 ),
-                InkWell(
-                  onTap: () {
-                    print('Tap Sample2');
-                    removeSelf();
-                  },
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(borderRadius),
-                      bottomRight: Radius.circular(borderRadius),
-                    ),
-                  ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Text(
-                      'Sample2',
-                      style: textStyle,
-                    ),
-                  ),
-                ),
+                _buildRightButton(context),
               ],
             ),
           ),
@@ -179,6 +140,56 @@ class _BalloonOverlay extends StatelessWidget {
           height: heightTriangle,
         ),
       ],
+    );
+  }
+
+  Widget _buildLeftButton(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        print('Tap Sample1');
+        removeSelf();
+      },
+      customBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(borderRadius),
+          bottomLeft: Radius.circular(borderRadius),
+        ),
+      ),
+      child: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: Text(
+          'Sample1',
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                fontSize: 14,
+              ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRightButton(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        print('Tap Sample2');
+        removeSelf();
+      },
+      customBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(borderRadius),
+          bottomRight: Radius.circular(borderRadius),
+        ),
+      ),
+      child: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: Text(
+          'Sample2',
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                fontSize: 14,
+              ),
+        ),
+      ),
     );
   }
 }
