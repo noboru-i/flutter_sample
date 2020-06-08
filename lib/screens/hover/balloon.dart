@@ -89,13 +89,12 @@ class _BalloonOverlay extends StatelessWidget {
   final Offset target;
   final Function removeOverlay;
 
-  static const heightBox = 52.0;
-  static const heightTriangle = 7.0;
-  static const space = 7.0;
   static const borderRadius = 10.0;
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
     return Stack(
       children: <Widget>[
         Positioned.fill(
@@ -108,8 +107,7 @@ class _BalloonOverlay extends StatelessWidget {
         ),
         Positioned(
           left: target.dx,
-          top: target.dy - (heightBox + heightTriangle + space),
-          height: heightBox + heightTriangle,
+          bottom: screenSize.height - target.dy,
           child: FadeTransition(
             opacity: animation,
             child: _buildBalloon(context),
@@ -124,12 +122,12 @@ class _BalloonOverlay extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Material(
-          elevation: 2,
+          elevation: 16,
           borderRadius: BorderRadius.all(
             Radius.circular(borderRadius),
           ),
           child: Container(
-            height: heightBox,
+            height: 52,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -146,10 +144,16 @@ class _BalloonOverlay extends StatelessWidget {
           ),
         ),
         Container(
-          color: Colors.white,
           margin: EdgeInsets.only(left: 20),
-          width: 8,
-          height: heightTriangle,
+          child: CustomPaint(
+            painter: TrianglePainter(
+              fillColor: Colors.white,
+            ),
+            child: Container(
+              width: 10,
+              height: 8,
+            ),
+          ),
         ),
       ],
     );
@@ -203,5 +207,35 @@ class _BalloonOverlay extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class TrianglePainter extends CustomPainter {
+  const TrianglePainter({
+    this.fillColor,
+  });
+
+  final Color fillColor;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()
+      ..color = fillColor
+      ..style = PaintingStyle.fill;
+
+    canvas.drawPath(getTrianglePath(size.width, size.height), paint);
+  }
+
+  Path getTrianglePath(double x, double y) {
+    return Path()
+      ..moveTo(0, 0)
+      ..lineTo(x / 2, y)
+      ..lineTo(x, 0)
+      ..lineTo(0, 0);
+  }
+
+  @override
+  bool shouldRepaint(TrianglePainter oldDelegate) {
+    return oldDelegate.fillColor != fillColor;
   }
 }
