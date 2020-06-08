@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sample/screens/bounce_button/bounce_button_screen.dart';
 import 'package:flutter_sample/screens/half_circle_button/half_circle_button_screen.dart';
 import 'package:flutter_sample/screens/rotate_background/rotate_background_screen.dart';
+import 'package:flutter_sample/screens/slot/slot_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         BounceButtonScreen.routeName: (context) => BounceButtonScreen(),
         HalfCircleButtonScreen.routeName: (context) => HalfCircleButtonScreen(),
         RotateBackgroundScreen.routeName: (context) => RotateBackgroundScreen(),
+        SlotScreen.routeName: (context) => SlotScreen(),
       },
     );
   }
@@ -29,6 +31,7 @@ class HomeScreen extends StatelessWidget {
     BounceButtonScreen.routeName,
     HalfCircleButtonScreen.routeName,
     RotateBackgroundScreen.routeName,
+    SlotScreen.routeName,
   ];
 
   @override
