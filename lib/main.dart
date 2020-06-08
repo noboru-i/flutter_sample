@@ -3,6 +3,7 @@ import 'package:flutter_sample/screens/bounce_button/bounce_button_screen.dart';
 import 'package:flutter_sample/screens/half_circle_button/half_circle_button_screen.dart';
 import 'package:flutter_sample/screens/hover/hover_screen.dart';
 import 'package:flutter_sample/screens/rotate_background/rotate_background_screen.dart';
+import 'package:flutter_sample/screens/slot/slot_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         HalfCircleButtonScreen.routeName: (context) => HalfCircleButtonScreen(),
         RotateBackgroundScreen.routeName: (context) => RotateBackgroundScreen(),
         HoverScreen.routeName: (context) => HoverScreen(),
+        SlotScreen.routeName: (context) => SlotScreen(),
       },
     );
   }
@@ -32,6 +34,7 @@ class HomeScreen extends StatelessWidget {
     HalfCircleButtonScreen.routeName,
     RotateBackgroundScreen.routeName,
     HoverScreen.routeName,
+    SlotScreen.routeName,
   ];
 
   @override
