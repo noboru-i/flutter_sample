@@ -4,6 +4,7 @@ import 'package:flutter_sample/screens/half_circle_button/half_circle_button_scr
 import 'package:flutter_sample/screens/hover/hover_screen.dart';
 import 'package:flutter_sample/screens/rotate_background/rotate_background_screen.dart';
 import 'package:flutter_sample/screens/slot/slot_screen.dart';
+import 'package:flutter_sample/screens/tap_down/tap_down_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         RotateBackgroundScreen.routeName: (context) => RotateBackgroundScreen(),
         HoverScreen.routeName: (context) => HoverScreen(),
         SlotScreen.routeName: (context) => SlotScreen(),
+        TapDownScreen.routeName: (context) => TapDownScreen(),
       },
     );
   }
@@ -35,6 +37,7 @@ class HomeScreen extends StatelessWidget {
     RotateBackgroundScreen.routeName,
     HoverScreen.routeName,
     SlotScreen.routeName,
+    TapDownScreen.routeName,
   ];
 
   @override

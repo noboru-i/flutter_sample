@@ -11,3 +11,9 @@ import Flutter
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
+
+public extension FlutterViewController {
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+        return [.left, .right]
+    }
+}
