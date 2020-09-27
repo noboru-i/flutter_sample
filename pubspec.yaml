@@ -18,6 +18,7 @@ dependencies:
   file_picker: ^2.0.3
   mime: ^0.9.7
   flutter_image_compress: ^0.7.0
+  native_pdf_view: ^3.8.0
 
 dev_dependencies:
   flutter_test:

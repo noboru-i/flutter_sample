@@ -1,4 +1,6 @@
 PODS:
+  - device_info (0.0.1):
+    - Flutter
   - DKImagePickerController/Core (4.2.2):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -51,6 +53,10 @@ PODS:
   - Mantle (2.1.4):
     - Mantle/extobjc (= 2.1.4)
   - Mantle/extobjc (2.1.4)
+  - native_pdf_renderer (1.0.0):
+    - Flutter
+  - path_provider (0.0.1):
+    - Flutter
   - SDWebImage (5.9.1):
     - SDWebImage/Core (= 5.9.1)
   - SDWebImage/Core (5.9.1)
@@ -62,9 +68,12 @@ PODS:
     - SDWebImage/Core (~> 5.7)
 
 DEPENDENCIES:
+  - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
+  - native_pdf_renderer (from `.symlinks/plugins/native_pdf_renderer/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
 
 SPEC REPOS:
   trunk:
@@ -78,14 +87,21 @@ SPEC REPOS:
     - SDWebImageWebPCoder
 
 EXTERNAL SOURCES:
+  device_info:
+    :path: ".symlinks/plugins/device_info/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
     :path: Flutter
   flutter_image_compress:
     :path: ".symlinks/plugins/flutter_image_compress/ios"
+  native_pdf_renderer:
+    :path: ".symlinks/plugins/native_pdf_renderer/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
 
 SPEC CHECKSUMS:
+  device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   DKImagePickerController: 4a3e7948a848c4348e600b3fe5ce41478835fa10
   DKPhotoGallery: 0290d32343574f06eaa4c26f8f2f8a1035e916be
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
@@ -94,6 +110,8 @@ SPEC CHECKSUMS:
   flutter_image_compress: 082f8daaf6c1b0c9fe798251c750ef0ecd98d7ae
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   Mantle: bf2e1b464f82465b9074e9de970739a2615e093a
+  native_pdf_renderer: fa374da660730abe059e7a178e79895dd202f007
+  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   SDWebImage: a990c053fff71e388a10f3357edb0be17929c9c5
   SDWebImageFLPlugin: 6c2295fb1242d44467c6c87dc5db6b0a13228fd8
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
