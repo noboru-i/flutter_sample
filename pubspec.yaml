@@ -13,7 +13,11 @@ dependencies:
 
   cupertino_icons: ^0.1.2
 
-  flutter_svg: ^0.17.4
+  flutter_svg: ^0.19.0
+
+  file_picker: ^2.0.3
+  mime: ^0.9.7
+  flutter_image_compress: ^0.7.0
 
 dev_dependencies:
   flutter_test:

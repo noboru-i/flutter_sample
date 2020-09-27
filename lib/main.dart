@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/screens/bounce_button/bounce_button_screen.dart';
+import 'package:flutter_sample/screens/file_picker/file_picker_screen.dart';
 import 'package:flutter_sample/screens/half_circle_button/half_circle_button_screen.dart';
 import 'package:flutter_sample/screens/hover/hover_screen.dart';
 import 'package:flutter_sample/screens/rotate_background/rotate_background_screen.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         HoverScreen.routeName: (context) => HoverScreen(),
         SlotScreen.routeName: (context) => SlotScreen(),
         TapDownScreen.routeName: (context) => TapDownScreen(),
+        FilePickerScreen.routeName: (context) => FilePickerScreen(),
       },
     );
   }
@@ -38,6 +40,7 @@ class HomeScreen extends StatelessWidget {
     HoverScreen.routeName,
     SlotScreen.routeName,
     TapDownScreen.routeName,
+    FilePickerScreen.routeName,
   ];
 
   @override
