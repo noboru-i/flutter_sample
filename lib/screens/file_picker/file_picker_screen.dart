@@ -62,10 +62,12 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
     final contents = await file.readAsBytes();
     print('contents ${contents.sublist(0, 100)}');
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => PDFScreen(file.absolute.path)),
-    );
+    if (mime == 'application/pdf') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PDFScreen(file.absolute.path)),
+      );
+    }
   }
 
   Future<void> _selectPhoto() async {
