@@ -14,9 +14,9 @@ class _$BottomTabStateTearOff {
   const _$BottomTabStateTearOff();
 
 // ignore: unused_element
-  _BottomTabState call({List<String> list}) {
+  _BottomTabState call({int dummy}) {
     return _BottomTabState(
-      list: list,
+      dummy: dummy,
     );
   }
 }
@@ -27,7 +27,8 @@ const $BottomTabState = _$BottomTabStateTearOff();
 
 /// @nodoc
 mixin _$BottomTabState {
-  List<String> get list;
+// TODO something value (e.g. count of notification)
+  int get dummy;
 
   $BottomTabStateCopyWith<BottomTabState> get copyWith;
 }
@@ -37,7 +38,7 @@ abstract class $BottomTabStateCopyWith<$Res> {
   factory $BottomTabStateCopyWith(
           BottomTabState value, $Res Function(BottomTabState) then) =
       _$BottomTabStateCopyWithImpl<$Res>;
-  $Res call({List<String> list});
+  $Res call({int dummy});
 }
 
 /// @nodoc
@@ -51,10 +52,10 @@ class _$BottomTabStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object list = freezed,
+    Object dummy = freezed,
   }) {
     return _then(_value.copyWith(
-      list: list == freezed ? _value.list : list as List<String>,
+      dummy: dummy == freezed ? _value.dummy : dummy as int,
     ));
   }
 }
@@ -66,7 +67,7 @@ abstract class _$BottomTabStateCopyWith<$Res>
           _BottomTabState value, $Res Function(_BottomTabState) then) =
       __$BottomTabStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<String> list});
+  $Res call({int dummy});
 }
 
 /// @nodoc
@@ -82,10 +83,10 @@ class __$BottomTabStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object list = freezed,
+    Object dummy = freezed,
   }) {
     return _then(_BottomTabState(
-      list: list == freezed ? _value.list : list as List<String>,
+      dummy: dummy == freezed ? _value.dummy : dummy as int,
     ));
   }
 }
@@ -94,14 +95,14 @@ class __$BottomTabStateCopyWithImpl<$Res>
 class _$_BottomTabState
     with DiagnosticableTreeMixin
     implements _BottomTabState {
-  const _$_BottomTabState({this.list});
+  const _$_BottomTabState({this.dummy});
 
-  @override
-  final List<String> list;
+  @override // TODO something value (e.g. count of notification)
+  final int dummy;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BottomTabState(list: $list)';
+    return 'BottomTabState(dummy: $dummy)';
   }
 
   @override
@@ -109,20 +110,20 @@ class _$_BottomTabState
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BottomTabState'))
-      ..add(DiagnosticsProperty('list', list));
+      ..add(DiagnosticsProperty('dummy', dummy));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _BottomTabState &&
-            (identical(other.list, list) ||
-                const DeepCollectionEquality().equals(other.list, list)));
+            (identical(other.dummy, dummy) ||
+                const DeepCollectionEquality().equals(other.dummy, dummy)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(list);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(dummy);
 
   @override
   _$BottomTabStateCopyWith<_BottomTabState> get copyWith =>
@@ -130,10 +131,10 @@ class _$_BottomTabState
 }
 
 abstract class _BottomTabState implements BottomTabState {
-  const factory _BottomTabState({List<String> list}) = _$_BottomTabState;
+  const factory _BottomTabState({int dummy}) = _$_BottomTabState;
 
-  @override
-  List<String> get list;
+  @override // TODO something value (e.g. count of notification)
+  int get dummy;
   @override
   _$BottomTabStateCopyWith<_BottomTabState> get copyWith;
 }

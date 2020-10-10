@@ -6,6 +6,7 @@ part 'bottom_tab_state.freezed.dart';
 @freezed
 abstract class BottomTabState with _$BottomTabState {
   const factory BottomTabState({
-    List<String> list,
+    // TODO something value (e.g. count of notification)
+    int dummy,
   }) = _BottomTabState;
 }

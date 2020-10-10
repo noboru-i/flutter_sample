@@ -14,7 +14,7 @@ class _$HomeStateTearOff {
   const _$HomeStateTearOff();
 
 // ignore: unused_element
-  _HomeState call({bool isLoading, List<String> list}) {
+  _HomeState call({bool isLoading, List<String> list = const []}) {
     return _HomeState(
       isLoading: isLoading,
       list: list,
@@ -93,10 +93,12 @@ class __$HomeStateCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_HomeState with DiagnosticableTreeMixin implements _HomeState {
-  const _$_HomeState({this.isLoading, this.list});
+  const _$_HomeState({this.isLoading, this.list = const []})
+      : assert(list != null);
 
   @override
   final bool isLoading;
+  @JsonKey(defaultValue: const [])
   @override
   final List<String> list;
 

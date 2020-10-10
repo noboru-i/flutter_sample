@@ -7,6 +7,6 @@ part 'home_state.freezed.dart';
 abstract class HomeState with _$HomeState {
   const factory HomeState({
     bool isLoading,
-    List<String> list,
+    @Default([]) List<String> list,
   }) = _HomeState;
 }
