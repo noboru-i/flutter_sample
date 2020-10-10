@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/screens/bottom_tab/account/account_screen.dart';
+import 'package:flutter_sample/screens/bottom_tab/home/home_screen.dart';
 
 class BottomTabScreen extends StatefulWidget {
   static const routeName = '/bottom_tab';
@@ -46,72 +48,15 @@ class _BottomTabScreenState extends State<BottomTabScreen> {
             builder: (BuildContext context) {
               switch (index) {
                 case 0:
-                  return _HomePage();
+                  return HomeScreen();
                 case 1:
-                  return _AccountPage();
+                  return AccountScreen();
               }
               // error
               return Container();
             },
           );
         },
-      ),
-    );
-  }
-}
-
-class _HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('HomePage'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('HomePage'),
-            ElevatedButton(
-              child: Text('move to detail'),
-              onPressed: () {
-                Navigator.of(context).push(
-                  CupertinoPageRoute<void>(
-                    builder: (context) => _HomeDetail(),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _HomeDetail extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('HomeDetail'),
-      ),
-      body: Container(
-        child: Text('HomeDetail'),
-      ),
-    );
-  }
-}
-
-class _AccountPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('AccountPage'),
-      ),
-      body: Container(
-        child: Text('AccountPage'),
       ),
     );
   }
