@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/screens/bottom_tab/bottom_tab_screen.dart';
 import 'package:flutter_sample/screens/bounce_button/bounce_button_screen.dart';
 import 'package:flutter_sample/screens/file_picker/file_picker_screen.dart';
 import 'package:flutter_sample/screens/half_circle_button/half_circle_button_screen.dart';
@@ -20,13 +21,14 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomeScreen(),
+        BottomTabScreen.routeName: (context) => BottomTabScreen(),
         BounceButtonScreen.routeName: (context) => BounceButtonScreen(),
+        FilePickerScreen.routeName: (context) => FilePickerScreen(),
         HalfCircleButtonScreen.routeName: (context) => HalfCircleButtonScreen(),
-        RotateBackgroundScreen.routeName: (context) => RotateBackgroundScreen(),
         HoverScreen.routeName: (context) => HoverScreen(),
+        RotateBackgroundScreen.routeName: (context) => RotateBackgroundScreen(),
         SlotScreen.routeName: (context) => SlotScreen(),
         TapDownScreen.routeName: (context) => TapDownScreen(),
-        FilePickerScreen.routeName: (context) => FilePickerScreen(),
       },
     );
   }
@@ -34,13 +36,14 @@ class MyApp extends StatelessWidget {
 
 class HomeScreen extends StatelessWidget {
   final screens = [
+    BottomTabScreen.routeName,
     BounceButtonScreen.routeName,
+    FilePickerScreen.routeName,
     HalfCircleButtonScreen.routeName,
-    RotateBackgroundScreen.routeName,
     HoverScreen.routeName,
+    RotateBackgroundScreen.routeName,
     SlotScreen.routeName,
     TapDownScreen.routeName,
-    FilePickerScreen.routeName,
   ];
 
   @override
