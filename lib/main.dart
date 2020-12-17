@@ -4,6 +4,7 @@ import 'package:flutter_sample/screens/bounce_button/bounce_button_screen.dart';
 import 'package:flutter_sample/screens/file_picker/file_picker_screen.dart';
 import 'package:flutter_sample/screens/half_circle_button/half_circle_button_screen.dart';
 import 'package:flutter_sample/screens/hover/hover_screen.dart';
+import 'package:flutter_sample/screens/nested_navigator/nested_first_screen.dart';
 import 'package:flutter_sample/screens/rotate_background/rotate_background_screen.dart';
 import 'package:flutter_sample/screens/slot/slot_screen.dart';
 import 'package:flutter_sample/screens/tap_down/tap_down_screen.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         FilePickerScreen.routeName: (context) => FilePickerScreen(),
         HalfCircleButtonScreen.routeName: (context) => HalfCircleButtonScreen(),
         HoverScreen.routeName: (context) => HoverScreen(),
+        NestedFirstScreen.routeName: (context) => NestedFirstScreen(),
         RotateBackgroundScreen.routeName: (context) => RotateBackgroundScreen(),
         SlotScreen.routeName: (context) => SlotScreen(),
         TapDownScreen.routeName: (context) => TapDownScreen(),
@@ -41,6 +43,7 @@ class HomeScreen extends StatelessWidget {
     FilePickerScreen.routeName,
     HalfCircleButtonScreen.routeName,
     HoverScreen.routeName,
+    NestedFirstScreen.routeName,
     RotateBackgroundScreen.routeName,
     SlotScreen.routeName,
     TapDownScreen.routeName,
