@@ -10,38 +10,63 @@ class NestedContainerScreenResult {
   final bool isCompleted;
 }
 
-class NestedContainerScreen extends StatelessWidget {
+class NestedContainerScreen extends StatefulWidget {
+  @override
+  _NestedContainerScreenState createState() => _NestedContainerScreenState();
+}
+
+class _NestedContainerScreenState extends State<NestedContainerScreen> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => NestedContainerScreenState(
         onCompleted: (isCompleted) => _onCompleted(context, isCompleted),
       ),
-      child: Navigator(
-        initialRoute: NestedScreen1.routeName,
-        onGenerateRoute: (RouteSettings settings) {
-          WidgetBuilder builder;
-          switch (settings.name) {
-            case NestedScreen1.routeName:
-              builder = (BuildContext context) => NestedScreen1();
-              break;
-            case NestedScreen2.routeName:
-              builder = (BuildContext context) => NestedScreen2();
-              break;
-            case NestedConfirmScreen.routeName:
-              builder = (BuildContext context) => NestedConfirmScreen();
-              break;
-          }
-          return MaterialPageRoute<dynamic>(
-            builder: builder,
-            settings: settings,
-          );
-        },
+      child: WillPopScope(
+        onWillPop: () async => !(await _navigatorKey.currentState.maybePop()),
+        child: Navigator(
+          key: _navigatorKey,
+          initialRoute: NestedScreen1.routeName,
+          onGenerateRoute: (RouteSettings settings) {
+            WidgetBuilder builder;
+            switch (settings.name) {
+              case NestedScreen1.routeName:
+                builder = (BuildContext context) => NestedScreen1();
+                break;
+              case NestedScreen2.routeName:
+                builder = (BuildContext context) => NestedScreen2();
+                break;
+              case NestedConfirmScreen.routeName:
+                builder = (BuildContext context) => NestedConfirmScreen();
+                break;
+            }
+            return MaterialPageRoute<dynamic>(
+              builder: builder,
+              settings: settings,
+            );
+          },
+        ),
       ),
     );
   }
 
   Future<void> _onCompleted(BuildContext context, bool isCompleted) async {
+    await showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          content: Text('Thank you!'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("OK"),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        );
+      },
+    );
     Navigator.of(context).pop(NestedContainerScreenResult(
       isCompleted: isCompleted,
     ));

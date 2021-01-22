@@ -32,7 +32,7 @@ class NestedFirstScreen extends StatelessWidget {
         context: context,
         builder: (_) {
           return AlertDialog(
-            content: Text('Thank you!'),
+            content: Text('Completed!'),
             actions: <Widget>[
               FlatButton(
                 child: Text("OK"),
