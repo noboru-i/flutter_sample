@@ -53,7 +53,7 @@ PODS:
   - Mantle (2.1.4):
     - Mantle/extobjc (= 2.1.4)
   - Mantle/extobjc (2.1.4)
-  - native_pdf_renderer (1.0.0):
+  - native_pdf_renderer (1.1.0):
     - Flutter
   - path_provider (0.0.1):
     - Flutter
@@ -106,11 +106,11 @@ SPEC CHECKSUMS:
   DKPhotoGallery: 0290d32343574f06eaa4c26f8f2f8a1035e916be
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_image_compress: 082f8daaf6c1b0c9fe798251c750ef0ecd98d7ae
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   Mantle: bf2e1b464f82465b9074e9de970739a2615e093a
-  native_pdf_renderer: fa374da660730abe059e7a178e79895dd202f007
+  native_pdf_renderer: 3e81ffe3d40668cce75694596201bb9fb0fdb6e9
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   SDWebImage: a990c053fff71e388a10f3357edb0be17929c9c5
   SDWebImageFLPlugin: 6c2295fb1242d44467c6c87dc5db6b0a13228fd8
@@ -118,4 +118,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1
