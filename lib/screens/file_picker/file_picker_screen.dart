@@ -21,24 +21,24 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('File Picker'),
+        title: const Text('File Picker'),
       ),
       body: SafeArea(
         child: Center(
           child: Column(
             children: [
               image == null ? Container() : Image(image: MemoryImage(image)),
-              RaisedButton(
-                child: Text('select file'),
+              ElevatedButton(
                 onPressed: () {
                   _selectFile();
                 },
+                child: const Text('select file'),
               ),
-              RaisedButton(
-                child: Text('select photo'),
+              ElevatedButton(
                 onPressed: () {
                   _selectPhoto();
                 },
+                child: const Text('select photo'),
               ),
             ],
           ),
@@ -48,13 +48,12 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
   }
 
   Future<void> _selectFile() async {
-    FilePickerResult result =
-        await FilePicker.platform.pickFiles(type: FileType.any);
+    final result = await FilePicker.platform.pickFiles(type: FileType.any);
     if (result == null) {
       return;
     }
 
-    File file = File(result.files.single.path);
+    final file = File(result.files.single.path);
     print('file ${file.path}');
     final mime = lookupMimeType(file.path);
     print('mime $mime');
@@ -63,7 +62,7 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
     print('contents ${contents.sublist(0, 100)}');
 
     if (mime == 'application/pdf') {
-      Navigator.push(
+      await Navigator.push<void>(
         context,
         MaterialPageRoute(builder: (context) => PDFScreen(file.absolute.path)),
       );
@@ -71,13 +70,12 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
   }
 
   Future<void> _selectPhoto() async {
-    FilePickerResult result =
-        await FilePicker.platform.pickFiles(type: FileType.media);
+    final result = await FilePicker.platform.pickFiles(type: FileType.media);
     if (result == null) {
       return;
     }
 
-    File file = File(result.files.single.path);
+    final file = File(result.files.single.path);
     print('file ${file.path}');
     final mime = lookupMimeType(file.path);
     print('mime $mime');
@@ -89,13 +87,13 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
     if (type == 'image') {
       final tmpImage = await _testCompressFile(file);
       setState(() {
-        this.image = tmpImage;
+        image = tmpImage;
       });
     }
   }
 
   Future<Uint8List> _testCompressFile(File file) async {
-    var result = await FlutterImageCompress.compressWithFile(
+    final result = await FlutterImageCompress.compressWithFile(
       file.absolute.path,
       minWidth: 150,
       minHeight: 150,
@@ -111,7 +109,7 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
 class PDFScreen extends StatefulWidget {
   const PDFScreen(this.path);
 
-  final path;
+  final String path;
 
   @override
   _PDFScreenState createState() => _PDFScreenState();
@@ -134,7 +132,7 @@ class _PDFScreenState extends State<PDFScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Document"),
+        title: const Text('Document'),
       ),
       body: SafeArea(
         child: Column(
@@ -158,9 +156,9 @@ class _PDFScreenState extends State<PDFScreen> {
             Text(
               '$_actualPageNumber/$_allPagesCount',
             ),
-            RaisedButton(
-              child: Text('some button'),
+            ElevatedButton(
               onPressed: () {},
+              child: const Text('some button'),
             ),
           ],
         ),

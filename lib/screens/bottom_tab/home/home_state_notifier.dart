@@ -5,7 +5,7 @@ import 'package:flutter_sample/screens/bottom_tab/home/home_state.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 class HomeStateNotifier extends StateNotifier<HomeState> with LocatorMixin {
-  HomeStateNotifier() : super(HomeState()) {
+  HomeStateNotifier() : super(const HomeState()) {
     refresh();
   }
 
@@ -13,7 +13,7 @@ class HomeStateNotifier extends StateNotifier<HomeState> with LocatorMixin {
   void initState() {
     read<BottomTabStateNotifier>().addRefreshListener(
       TabItem.home,
-      () => refresh(),
+      refresh,
     );
   }
 
@@ -37,8 +37,8 @@ class HomeStateNotifier extends StateNotifier<HomeState> with LocatorMixin {
   }
 
   Future<List<String>> _callApi() async {
-    // TODO API call here
-    await Future.delayed(Duration(seconds: 2));
+    // API call here
+    await Future<void>.delayed(const Duration(seconds: 2));
 
     final random = math.Random();
     return List.generate(20, (index) => random.nextInt(9999).toString())

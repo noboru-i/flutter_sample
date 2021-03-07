@@ -53,15 +53,15 @@ class _NestedContainerScreenState extends State<NestedContainerScreen> {
   }
 
   Future<void> _onCompleted(BuildContext context, bool isCompleted) async {
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (_) {
         return AlertDialog(
-          content: Text('Thank you!'),
+          content: const Text('Thank you!'),
           actions: <Widget>[
-            FlatButton(
-              child: Text("OK"),
+            TextButton(
               onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -81,30 +81,18 @@ class NestedContainerScreenState extends ChangeNotifier {
   final void Function(bool) onCompleted;
 
   // hold all answers in this class.
-  String _name;
-  int _age;
+  String name;
+  int age;
   bool _sending = false;
 
-  String get name => _name;
-
-  int get age => _age;
-
   bool get sending => _sending;
-
-  void saveName(String name) {
-    _name = name;
-  }
-
-  void saveAge(int age) {
-    _age = age;
-  }
 
   Future<void> submit() async {
     _sending = true;
     notifyListeners();
 
     // send name and age by API.
-    await Future.delayed(Duration(seconds: 3));
+    await Future<void>.delayed(const Duration(seconds: 3));
 
     _sending = false;
     notifyListeners();

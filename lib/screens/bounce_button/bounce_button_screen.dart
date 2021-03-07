@@ -8,41 +8,36 @@ class BounceButtonScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Demo Home Page'),
+        title: const Text('Flutter Demo Home Page'),
       ),
+      backgroundColor: Colors.grey.shade300,
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(8),
           children: <Widget>[
-            Text('Large'),
+            const Text('Large'),
             _ListItem0(),
-            Text('enabled'),
+            const Text('enabled'),
             _ListItem1(),
-            Text('disabled'),
+            const Text('disabled'),
             _ListItem2(),
-            Text('onLongPress'),
+            const Text('onLongPress'),
             _ListItem3(),
-            Text('ButtonTextTheme.normal'),
-            _ListItem4(ButtonTextTheme.normal),
-            Text('ButtonTextTheme.accent'),
-            _ListItem4(ButtonTextTheme.accent),
-            Text('ButtonTextTheme.primary'),
-            _ListItem4(ButtonTextTheme.primary),
-            Text('enable colors'),
-            _ListItem5(),
-            Text('disabled color'),
-            _ListItem6(),
-            Text('Brightness.light'),
-            _ListItem7(Brightness.light),
-            Text('Brightness.dark'),
-            _ListItem7(Brightness.dark),
-            Text('elevation'),
+            const Text('enable colors'),
+            const _ListItem5(isEnabled: true),
+            const Text('disabled color'),
+            const _ListItem5(isEnabled: false),
+            const Text('Brightness.light'),
+            const _ListItem7(Brightness.light),
+            const Text('Brightness.dark'),
+            const _ListItem7(Brightness.dark),
+            const Text('elevation'),
             _ListItem8(),
-            Text('padding'),
+            const Text('padding'),
             _ListItem9(),
-            Text('shape'),
+            const Text('shape'),
             _ListItem10(),
-            Text('ratio'),
+            const Text('ratio'),
             _ListItem11(),
           ],
         ),
@@ -53,19 +48,19 @@ class BounceButtonScreen extends StatelessWidget {
 
 class _ListItem0 extends StatelessWidget {
   void _onPressed(BuildContext context) {
-    Scaffold.of(context).showSnackBar(new SnackBar(
-      content: new Text('pressed!'),
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('pressed!'),
     ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
-      constraints: BoxConstraints.expand(height: 150),
+      margin: const EdgeInsets.symmetric(horizontal: 40),
+      constraints: const BoxConstraints.expand(height: 150),
       child: BounceButton(
         onPressed: () => _onPressed(context),
-        child: Text('BounceButton'),
+        child: const Text('BounceButton'),
       ),
     );
   }
@@ -73,8 +68,8 @@ class _ListItem0 extends StatelessWidget {
 
 class _ListItem1 extends StatelessWidget {
   void _onPressed(BuildContext context) {
-    Scaffold.of(context).showSnackBar(new SnackBar(
-      content: new Text('pressed!'),
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('pressed!'),
     ));
   }
 
@@ -83,17 +78,17 @@ class _ListItem1 extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        RaisedButton(
+        ElevatedButton(
           onPressed: () => _onPressed(context),
-          child: Text('RaisedButton'),
+          child: const Text('ElevatedButton'),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () => _onPressed(context),
-          child: Text('FlatButton'),
+          child: const Text('TextButton'),
         ),
         BounceButton(
           onPressed: () => _onPressed(context),
-          child: Text('BounceButton'),
+          child: const Text('BounceButton'),
         ),
       ],
     );
@@ -105,14 +100,14 @@ class _ListItem2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        RaisedButton(
+      children: const <Widget>[
+        ElevatedButton(
           onPressed: null,
-          child: Text('RaisedButton'),
+          child: Text('ElevatedButton'),
         ),
-        FlatButton(
+        TextButton(
           onPressed: null,
-          child: Text('FlatButton'),
+          child: Text('TextButton'),
         ),
         BounceButton(
           onPressed: null,
@@ -125,8 +120,8 @@ class _ListItem2 extends StatelessWidget {
 
 class _ListItem3 extends StatelessWidget {
   void _onLongPressed(BuildContext context) {
-    Scaffold.of(context).showSnackBar(new SnackBar(
-      content: new Text('long pressed!'),
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('long pressed!'),
     ));
   }
 
@@ -135,50 +130,20 @@ class _ListItem3 extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        RaisedButton(
+        ElevatedButton(
           onPressed: null,
           onLongPress: () => _onLongPressed(context),
-          child: Text('RaisedButton'),
+          child: const Text('ElevatedButton'),
         ),
-        FlatButton(
+        TextButton(
           onPressed: null,
           onLongPress: () => _onLongPressed(context),
-          child: Text('FlatButton'),
+          child: const Text('TextButton'),
         ),
         BounceButton(
           onPressed: null,
           onLongPress: () => _onLongPressed(context),
-          child: Text('BounceButton'),
-        ),
-      ],
-    );
-  }
-}
-
-class _ListItem4 extends StatelessWidget {
-  _ListItem4(this.textTheme);
-
-  ButtonTextTheme textTheme;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        RaisedButton(
-          onPressed: () {},
-          textTheme: textTheme,
-          child: Text('RaisedButton'),
-        ),
-        FlatButton(
-          onPressed: () {},
-          textTheme: textTheme,
-          child: Text('FlatButton'),
-        ),
-        BounceButton(
-          onPressed: () {},
-          textTheme: textTheme,
-          child: Text('BounceButton'),
+          child: const Text('BounceButton'),
         ),
       ],
     );
@@ -186,57 +151,41 @@ class _ListItem4 extends StatelessWidget {
 }
 
 class _ListItem5 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        RaisedButton(
-          onPressed: () {},
-          textColor: Colors.yellow,
-          color: Colors.green,
-          child: Text('RaisedButton'),
-        ),
-        FlatButton(
-          onPressed: () {},
-          textColor: Colors.yellow,
-          color: Colors.green,
-          child: Text('FlatButton'),
-        ),
-        BounceButton(
-          onPressed: () {},
-          textColor: Colors.yellow,
-          color: Colors.green,
-          child: Text('BounceButton'),
-        ),
-      ],
-    );
-  }
-}
+  const _ListItem5({
+    this.isEnabled,
+  });
 
-class _ListItem6 extends StatelessWidget {
+  final bool isEnabled;
+
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        RaisedButton(
-          onPressed: null,
-          disabledTextColor: Colors.amber,
-          disabledColor: Colors.cyan,
-          child: Text('RaisedButton'),
+        ElevatedButton(
+          onPressed: isEnabled ? () {} : null,
+          style: ElevatedButton.styleFrom(
+            primary: Colors.green,
+            onPrimary: Colors.yellow,
+            onSurface: Colors.amber,
+          ),
+          child: const Text('ElevatedButton'),
         ),
-        FlatButton(
-          onPressed: null,
-          disabledTextColor: Colors.amber,
-          disabledColor: Colors.cyan,
-          child: Text('FlatButton'),
+        TextButton(
+          onPressed: isEnabled ? () {} : null,
+          style: TextButton.styleFrom(
+            primary: Colors.yellow,
+            onSurface: Colors.amber,
+          ),
+          child: const Text('TextButton'),
         ),
         BounceButton(
-          onPressed: null,
+          onPressed: isEnabled ? () {} : null,
+          textColor: Colors.yellow,
+          color: Colors.green,
           disabledTextColor: Colors.amber,
           disabledColor: Colors.cyan,
-          child: Text('BounceButton'),
+          child: const Text('BounceButton'),
         ),
       ],
     );
@@ -244,29 +193,19 @@ class _ListItem6 extends StatelessWidget {
 }
 
 class _ListItem7 extends StatelessWidget {
-  _ListItem7(this.colorBrightness);
+  const _ListItem7(this.colorBrightness);
 
-  Brightness colorBrightness;
+  final Brightness colorBrightness;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        RaisedButton(
-          onPressed: () {},
-          colorBrightness: colorBrightness,
-          child: Text('RaisedButton'),
-        ),
-        FlatButton(
-          onPressed: () {},
-          colorBrightness: colorBrightness,
-          child: Text('FlatButton'),
-        ),
         BounceButton(
           onPressed: () {},
           colorBrightness: colorBrightness,
-          child: Text('BounceButton'),
+          child: const Text('BounceButton'),
         ),
       ],
     );
@@ -279,20 +218,24 @@ class _ListItem8 extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        RaisedButton(
+        ElevatedButton(
           onPressed: () {},
-          elevation: 8,
-          child: Text('RaisedButton'),
+          style: ElevatedButton.styleFrom(
+            elevation: 8,
+          ),
+          child: const Text('ElevatedButton'),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () {},
-//          elevation: 8,
-          child: Text('FlatButton'),
+          style: TextButton.styleFrom(
+            elevation: 8,
+          ),
+          child: const Text('TextButton'),
         ),
         BounceButton(
           onPressed: () {},
           elevation: 8,
-          child: Text('BounceButton'),
+          child: const Text('BounceButton'),
         ),
       ],
     );
@@ -305,20 +248,24 @@ class _ListItem9 extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        RaisedButton(
+        ElevatedButton(
           onPressed: () {},
-          padding: EdgeInsets.symmetric(vertical: 24.0),
-          child: Text('RaisedButton'),
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 24),
+          ),
+          child: const Text('ElevatedButton'),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () {},
-          padding: EdgeInsets.symmetric(vertical: 24.0),
-          child: Text('FlatButton'),
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 24),
+          ),
+          child: const Text('TextButton'),
         ),
         BounceButton(
           onPressed: () {},
-          padding: EdgeInsets.symmetric(vertical: 24.0),
-          child: Text('BounceButton'),
+          padding: const EdgeInsets.symmetric(vertical: 24),
+          child: const Text('BounceButton'),
         ),
       ],
     );
@@ -331,20 +278,24 @@ class _ListItem10 extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        RaisedButton(
+        ElevatedButton(
           onPressed: () {},
-          shape: StadiumBorder(),
-          child: Text('RaisedButton'),
+          style: ElevatedButton.styleFrom(
+            shape: const StadiumBorder(),
+          ),
+          child: const Text('ElevatedButton'),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () {},
-          shape: StadiumBorder(),
-          child: Text('FlatButton'),
+          style: TextButton.styleFrom(
+            shape: const StadiumBorder(),
+          ),
+          child: const Text('TextButton'),
         ),
         BounceButton(
           onPressed: () {},
-          shape: StadiumBorder(),
-          child: Text('BounceButton'),
+          shape: const StadiumBorder(),
+          child: const Text('BounceButton'),
         ),
       ],
     );
@@ -354,24 +305,27 @@ class _ListItem10 extends StatelessWidget {
 class _ListItem11 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        BounceButton(
-          onPressed: () {},
-          child: Text('BounceButton\nunspecified'),
-        ),
-        BounceButton(
-          onPressed: () {},
-          ratio: 0.5,
-          child: Text('BounceButton\n0.5'),
-        ),
-        BounceButton(
-          onPressed: () {},
-          ratio: 1.5,
-          child: Text('BounceButton\n1.5'),
-        ),
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          BounceButton(
+            onPressed: () {},
+            child: const Text('BounceButton\nunspecified'),
+          ),
+          BounceButton(
+            onPressed: () {},
+            ratio: 0.5,
+            child: const Text('BounceButton\n0.5'),
+          ),
+          BounceButton(
+            onPressed: () {},
+            ratio: 1.5,
+            child: const Text('BounceButton\n1.5'),
+          ),
+        ],
+      ),
     );
   }
 }

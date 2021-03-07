@@ -14,7 +14,7 @@ class _TapDownScreenState extends State<TapDownScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CheckTapDownTime'),
+        title: const Text('CheckTapDownTime'),
       ),
       body: Stack(
         children: <Widget>[

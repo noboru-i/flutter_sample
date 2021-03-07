@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // ref: https://medium.com/flutter-community/flutter-bouncing-button-animation-ece660e19c91
 class BounceButton extends MaterialButton {
-  BounceButton({
+  const BounceButton({
     Key key,
     @required VoidCallback onPressed,
     VoidCallback onLongPress,
@@ -63,7 +63,7 @@ class BounceButton extends MaterialButton {
 }
 
 class BounceAnimation extends StatefulWidget {
-  BounceAnimation({
+  const BounceAnimation({
     @required this.onPressed,
     this.onLongPress,
     this.child,

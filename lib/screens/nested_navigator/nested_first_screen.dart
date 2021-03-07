@@ -8,35 +8,36 @@ class NestedFirstScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Before nested screens'),
+        title: const Text('Before nested screens'),
       ),
       body: Center(
-        child: RaisedButton(
-          child: Text('Start nested navigation'),
+        child: ElevatedButton(
           onPressed: () => _showNextScreen(context),
+          child: const Text('Start nested navigation'),
         ),
       ),
     );
   }
 
   Future<void> _showNextScreen(BuildContext context) async {
-    final result = await Navigator.of(context).push(
+    final result =
+        await Navigator.of(context).push<NestedContainerScreenResult>(
       MaterialPageRoute(
         builder: (context) => NestedContainerScreen(),
       ),
-    ) as NestedContainerScreenResult;
+    );
 
     if (result?.isCompleted == true) {
       // show dialog when navigation is completed.
-      showDialog(
+      await showDialog<void>(
         context: context,
         builder: (_) {
           return AlertDialog(
-            content: Text('Completed!'),
+            content: const Text('Completed!'),
             actions: <Widget>[
-              FlatButton(
-                child: Text("OK"),
+              TextButton(
                 onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
               ),
             ],
           );

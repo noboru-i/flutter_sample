@@ -87,7 +87,7 @@ class _BalloonOverlay extends StatelessWidget {
 
   final Animation<double> animation;
   final Offset target;
-  final Function removeOverlay;
+  final void Function() removeOverlay;
 
   static const borderRadius = 10.0;
 
@@ -123,10 +123,10 @@ class _BalloonOverlay extends StatelessWidget {
       children: <Widget>[
         Material(
           elevation: 16,
-          borderRadius: BorderRadius.all(
+          borderRadius: const BorderRadius.all(
             Radius.circular(borderRadius),
           ),
-          child: Container(
+          child: SizedBox(
             height: 52,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -135,7 +135,7 @@ class _BalloonOverlay extends StatelessWidget {
                 _buildLeftButton(context),
                 Container(
                   width: 1,
-                  margin: EdgeInsets.symmetric(vertical: 15),
+                  margin: const EdgeInsets.symmetric(vertical: 15),
                   color: const Color(0xFFEAEAEA),
                 ),
                 _buildRightButton(context),
@@ -144,12 +144,12 @@ class _BalloonOverlay extends StatelessWidget {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(left: 20),
-          child: CustomPaint(
+          margin: const EdgeInsets.only(left: 20),
+          child: const CustomPaint(
             painter: TrianglePainter(
               fillColor: Colors.white,
             ),
-            child: Container(
+            child: SizedBox(
               width: 10,
               height: 8,
             ),
@@ -165,7 +165,7 @@ class _BalloonOverlay extends StatelessWidget {
         print('Tap Sample1');
         removeOverlay();
       },
-      customBorder: RoundedRectangleBorder(
+      customBorder: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(borderRadius),
           bottomLeft: Radius.circular(borderRadius),
@@ -173,7 +173,7 @@ class _BalloonOverlay extends StatelessWidget {
       ),
       child: Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Text(
           'Sample1',
           style: Theme.of(context).textTheme.bodyText1.copyWith(
@@ -190,7 +190,7 @@ class _BalloonOverlay extends StatelessWidget {
         print('Tap Sample2');
         removeOverlay();
       },
-      customBorder: RoundedRectangleBorder(
+      customBorder: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(borderRadius),
           bottomRight: Radius.circular(borderRadius),
@@ -198,7 +198,7 @@ class _BalloonOverlay extends StatelessWidget {
       ),
       child: Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Text(
           'Sample2',
           style: Theme.of(context).textTheme.bodyText1.copyWith(
@@ -219,7 +219,7 @@ class TrianglePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
+    final paint = Paint()
       ..color = fillColor
       ..style = PaintingStyle.fill;
 

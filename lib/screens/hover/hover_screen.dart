@@ -7,34 +7,34 @@ class HoverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFEAEAEA),
+      backgroundColor: const Color(0xFFEAEAEA),
       appBar: AppBar(
-        title: Text('Flutter Demo Home Page'),
+        title: const Text('Flutter Demo Home Page'),
       ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Balloon(
               child: Container(
                 width: 250,
                 height: 50,
                 color: Colors.blueAccent,
-                child: Center(
+                child: const Center(
                   child: Text('show hover'),
                 ),
               ),
             ),
-            SizedBox(height: 100),
+            const SizedBox(height: 100),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Balloon(
                 child: Container(
                   width: 250,
                   height: 50,
                   color: Colors.blueAccent,
-                  child: Center(
+                  child: const Center(
                     child: Text('show hover'),
                   ),
                 ),

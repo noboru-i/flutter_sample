@@ -13,7 +13,7 @@ class SlotScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('slot'),
+        title: const Text('slot'),
       ),
       body: _Screen(),
     );
@@ -37,7 +37,7 @@ class _ScreenState extends State<_Screen> {
           _Slot(
             result: result,
           ),
-          RaisedButton(
+          ElevatedButton(
             onPressed: () {
               final num = math.Random().nextInt(9999);
               setState(() {
@@ -48,7 +48,7 @@ class _ScreenState extends State<_Screen> {
                 print(result);
               });
             },
-            child: Text('stop'),
+            child: const Text('start'),
           ),
         ],
       ),
@@ -68,7 +68,7 @@ class _Slot extends StatefulWidget {
 }
 
 class _SlotState extends State<_Slot> {
-  final _randomRotateFactor = (math.Random().nextInt(4) + 2);
+  final _randomRotateFactor = math.Random().nextInt(4) + 2;
 
   List<ScrollController> _controllers;
 
@@ -140,7 +140,7 @@ class _SlotState extends State<_Slot> {
 }
 
 class _Numbers extends StatelessWidget {
-  _Numbers({
+  const _Numbers({
     this.controller,
     this.count,
     this.zeroToBlank,
@@ -150,14 +150,12 @@ class _Numbers extends StatelessWidget {
   final int count;
   final bool zeroToBlank;
 
-  final offset = 0.0;
-
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: _numberWidth,
       child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: controller,
         itemCount: count,
         itemBuilder: (context, index) {
@@ -182,7 +180,7 @@ class _Number extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         num == null ? '' : '$num',
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: _numberHeight,
           height: 1,
           color: Colors.blue,

@@ -49,7 +49,7 @@ class _BottomTabScreenState extends State<BottomTabScreen> {
             controller: _controller,
             tabBar: CupertinoTabBar(
               onTap: (index) => _onTapItem(context, index),
-              items: <BottomNavigationBarItem>[
+              items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.house),
                 ),

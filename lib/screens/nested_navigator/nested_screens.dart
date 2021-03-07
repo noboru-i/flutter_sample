@@ -10,13 +10,13 @@ class NestedScreen1 extends StatefulWidget {
 }
 
 class _NestedScreen1State extends State<NestedScreen1> {
-  final TextEditingController _controller = new TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('NestedScreen1'),
+        title: const Text('NestedScreen1'),
         leading: BackButton(
           onPressed: () => _onBack(context),
         ),
@@ -32,9 +32,9 @@ class _NestedScreen1State extends State<NestedScreen1> {
               ),
               controller: _controller,
             ),
-            RaisedButton(
-              child: Text('Next'),
+            ElevatedButton(
               onPressed: () => _showNextScreen(context),
+              child: const Text('Next'),
             ),
           ],
         ),
@@ -47,8 +47,8 @@ class _NestedScreen1State extends State<NestedScreen1> {
   }
 
   Future<void> _showNextScreen(BuildContext context) async {
-    context.read<NestedContainerScreenState>().saveName(_controller.text);
-    Navigator.of(context).pushNamed(NestedScreen2.routeName);
+    context.read<NestedContainerScreenState>().name = _controller.text;
+    await Navigator.of(context).pushNamed(NestedScreen2.routeName);
   }
 }
 
@@ -60,13 +60,13 @@ class NestedScreen2 extends StatefulWidget {
 }
 
 class _NestedScreen2State extends State<NestedScreen2> {
-  final TextEditingController _controller = new TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('NestedScreen2'),
+        title: const Text('NestedScreen2'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -79,9 +79,9 @@ class _NestedScreen2State extends State<NestedScreen2> {
               ),
               controller: _controller,
             ),
-            RaisedButton(
-              child: Text('Next'),
+            ElevatedButton(
               onPressed: () => _showNextScreen(context),
+              child: const Text('Next'),
             ),
           ],
         ),
@@ -91,8 +91,8 @@ class _NestedScreen2State extends State<NestedScreen2> {
 
   Future<void> _showNextScreen(BuildContext context) async {
     final age = int.tryParse(_controller.text);
-    context.read<NestedContainerScreenState>().saveAge(age);
-    Navigator.of(context).pushNamed(NestedConfirmScreen.routeName);
+    context.read<NestedContainerScreenState>().age = age;
+    await Navigator.of(context).pushNamed(NestedConfirmScreen.routeName);
   }
 }
 
@@ -108,7 +108,7 @@ class NestedConfirmScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('NestedConfirmScreen'),
+        title: const Text('NestedConfirmScreen'),
       ),
       body: Stack(
         children: [
@@ -118,16 +118,16 @@ class NestedConfirmScreen extends StatelessWidget {
               children: [
                 Text('Name: $name'),
                 Text('Age: ${age ?? ''}'),
-                RaisedButton(
-                  child: Text('Submit'),
+                ElevatedButton(
                   onPressed: () => _submit(context),
+                  child: const Text('Submit'),
                 ),
               ],
             ),
           ),
           Visibility(
             visible: sending,
-            child: Center(
+            child: const Center(
               child: CircularProgressIndicator(),
             ),
           ),
@@ -137,6 +137,6 @@ class NestedConfirmScreen extends StatelessWidget {
   }
 
   Future<void> _submit(BuildContext context) async {
-    context.read<NestedContainerScreenState>().submit();
+    await context.read<NestedContainerScreenState>().submit();
   }
 }

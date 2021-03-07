@@ -11,7 +11,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HalfCircleButton'),
+        title: const Text('HalfCircleButton'),
       ),
       backgroundColor: Colors.blueGrey,
       body: Stack(
@@ -28,7 +28,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
   Widget _buildTop(BuildContext context) {
     return Align(
       alignment: Alignment.topCenter,
-      child: Container(
+      child: SizedBox(
         width: 324,
         height: 162,
         child: HalfCircleButton(
@@ -43,7 +43,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
           child: Center(
             child: Text(
               'Top button',
-              style: Theme.of(context).textTheme.display1.copyWith(
+              style: Theme.of(context).textTheme.headline4.copyWith(
                     color: Colors.white,
                   ),
             ),
@@ -66,7 +66,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.centerRight,
-          child: Container(
+          child: SizedBox(
             width: 95,
             height: 190,
             child: HalfCircleButton(
@@ -85,7 +85,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
                   child: Text(
                     'Right\nbutton',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.title.copyWith(
+                    style: Theme.of(context).textTheme.headline6.copyWith(
                           color: Colors.white,
                         ),
                   ),
@@ -122,7 +122,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: BounceAnimation(
               scaleAlignment: Alignment.bottomCenter,
               onPressed: () {
@@ -141,7 +141,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
                       alignment: Alignment.bottomCenter,
                       child: Text(
                         'Bottom button',
-                        style: Theme.of(context).textTheme.display1.copyWith(
+                        style: Theme.of(context).textTheme.headline4.copyWith(
                               color: Colors.white,
                             ),
                       ),
@@ -159,7 +159,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
   Widget _buildLeft(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
-      child: Container(
+      child: SizedBox(
         width: 95,
         height: 190,
         child: BounceAnimation(
@@ -167,7 +167,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
           onPressed: () {
             print('tapped left button');
           },
-          child: AbsorbPointer(
+          child: const AbsorbPointer(
             child: HalfCircleButton(
               strokeWidth: 16,
               direction: AxisDirection.left,
@@ -184,7 +184,7 @@ class HalfCircleButtonScreen extends StatelessWidget {
 }
 
 class HalfCircleButton extends StatefulWidget {
-  HalfCircleButton({
+  const HalfCircleButton({
     this.strokeWidth,
     this.tapHighlightScale = 1.1,
     this.direction,
@@ -217,7 +217,7 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
     });
 
     // after few milliseconds, automatically hide highlight.
-    Timer(Duration(milliseconds: 200), () {
+    Timer(const Duration(milliseconds: 200), () {
       setState(() {
         isHighlight = false;
       });
@@ -244,7 +244,7 @@ class _HalfCircleButtonState extends State<HalfCircleButton> {
           // tap highlight
           AnimatedOpacity(
             opacity: isHighlight ? 1 : 0,
-            duration: Duration(milliseconds: 200),
+            duration: const Duration(milliseconds: 200),
             child: Transform.scale(
               scale: widget.tapHighlightScale,
               alignment: alignment,
@@ -351,7 +351,7 @@ class HalfCirclePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     _path = _getHalfCirclePath(size.width, size.height);
-    Paint paint = Paint()
+    final paint = Paint()
       ..color = color
       ..style = PaintingStyle.fill;
     canvas.drawPath(
@@ -369,7 +369,7 @@ class HalfCirclePainter extends CustomPainter {
   }
 
   Path _getHalfCirclePath(double x, double y) {
-    num degToRad(num deg) => deg * (math.pi / 180.0);
+    double degToRad(double deg) => deg * (math.pi / 180.0);
 
     final offset = _getOffset(x, y);
     final startAngle = _getStartAngle();
@@ -397,12 +397,12 @@ class HalfCirclePainter extends CustomPainter {
       case AxisDirection.down:
         return Offset(0, y);
       case AxisDirection.left:
-        return Offset(0, 0);
+        return const Offset(0, 0);
     }
     return null;
   }
 
-  num _getStartAngle() {
+  double _getStartAngle() {
     switch (direction) {
       case AxisDirection.up:
         return 0;
@@ -413,7 +413,7 @@ class HalfCirclePainter extends CustomPainter {
       case AxisDirection.left:
         return 270;
     }
-    return null;
+    return 0;
   }
 
   Rect _getRect(double x, double y) {

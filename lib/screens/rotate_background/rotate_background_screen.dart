@@ -8,7 +8,7 @@ class RotateBackgroundScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rotate background'),
+        title: const Text('Rotate background'),
       ),
       body: Stack(
         children: <Widget>[
@@ -59,8 +59,8 @@ class _RotateBackgroundState extends State<_RotateBackground>
     final screenHeight = MediaQuery.of(context).size.height;
     return ClipRect(
       child: OverflowBox(
-        minWidth: 0.0,
-        minHeight: 0.0,
+        minWidth: 0,
+        minHeight: 0,
         maxWidth: screenHeight,
         maxHeight: screenHeight,
         child: RotationTransition(
@@ -88,7 +88,7 @@ class _Screen extends StatelessWidget {
           textAlign: TextAlign.center,
           style: Theme.of(context)
               .textTheme
-              .display3
+              .headline2
               .copyWith(color: Colors.green),
         ),
       ),

@@ -5,10 +5,10 @@ class AccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('AccountPage'),
+        title: const Text('AccountPage'),
       ),
       body: Container(
-        child: Text('AccountPage'),
+        child: const Text('AccountPage'),
       ),
     );
   }

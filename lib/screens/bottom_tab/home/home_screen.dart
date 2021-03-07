@@ -13,21 +13,21 @@ class HomeScreen extends StatelessWidget {
         builder: (context, snapshot) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('HomePage'),
+              title: const Text('HomePage'),
             ),
             body: Stack(
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('HomePage'),
+                    const Text('HomePage'),
                     ElevatedButton(
-                      child: Text('refresh'),
                       onPressed: () => _refresh(context),
+                      child: const Text('refresh'),
                     ),
                     ElevatedButton(
-                      child: Text('move to detail'),
                       onPressed: () => _moveToDetail(context),
+                      child: const Text('move to detail'),
                     ),
                     Expanded(
                       child: _List(),
@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Visibility(
                   visible: context.select((HomeState state) => state.isLoading),
-                  child: Center(
+                  child: const Center(
                     child: CircularProgressIndicator(),
                   ),
                 ),
@@ -47,11 +47,11 @@ class HomeScreen extends StatelessWidget {
   }
 
   Future<void> _refresh(BuildContext context) async {
-    context.read<HomeStateNotifier>().refresh();
+    await context.read<HomeStateNotifier>().refresh();
   }
 
   Future<void> _moveToDetail(BuildContext context) async {
-    Navigator.of(context).push(
+    await Navigator.of(context).push(
       CupertinoPageRoute<void>(
         builder: (context) => _HomeDetailScreen(),
       ),
@@ -67,7 +67,7 @@ class _List extends StatelessWidget {
       itemCount: list.length,
       itemBuilder: (context, index) => Card(
         child: Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Text(list[index]),
         ),
       ),
@@ -80,10 +80,10 @@ class _HomeDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HomeDetail'),
+        title: const Text('HomeDetail'),
       ),
       body: Container(
-        child: Text('HomeDetail'),
+        child: const Text('HomeDetail'),
       ),
     );
   }

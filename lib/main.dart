@@ -53,7 +53,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Demo Home Page'),
+        title: const Text('Flutter Demo Home Page'),
       ),
       body: Container(
         child: ListView.builder(
@@ -66,7 +66,7 @@ class HomeScreen extends StatelessWidget {
             return Card(
               child: ListTile(
                 title: Text(name),
-                trailing: Icon(Icons.arrow_forward_ios),
+                trailing: const Icon(Icons.arrow_forward_ios),
                 onTap: () {
                   Navigator.pushNamed(context, name);
                 },
