@@ -22,4 +22,17 @@ jobs:
       - run: dart --version
       - run: flutter --version
       - run: flutter pub get
-      - run: flutter analyze
+      - run: flutter analyze > flutter_analyze_report.txt || true
+
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '3.x'
+          architecture: 'x64'
+      - name: Setup Danger
+        run: |
+          gem install danger danger-flutter_lint
+      - name: Run Danger
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: danger
