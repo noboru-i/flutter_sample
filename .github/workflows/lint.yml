@@ -17,7 +17,7 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.0.0'
+          flutter-version: '2.0.1'
           channel: 'stable'
       - run: dart --version
       - run: flutter --version
@@ -32,7 +32,6 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: '3.x'
-          architecture: 'x64'
       - name: Setup Danger
         run: |
           gem install danger danger-flutter_lint
